@@ -19,6 +19,7 @@ module alu(
             4'b0111: result = ($signed(a) < $signed(b)) ? 32'd1 : 32'd0; // SLT
 
             // ── New operations ────────────────────────────────────────────────
+            4'b0100: result = ~(a & b);                       // NAND
             4'b1000: result = ~(a | b);                       // NOR
             4'b1001: result = a ^ b;                          // XOR
             4'b1010: result = b << a[4:0];                    // SLL (shift amt in a)

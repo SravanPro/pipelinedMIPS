@@ -14,7 +14,7 @@ module ex_mem (
     input  wire        ex_mem_Zero_in,          // ALU zero flag (for beq)
     input  wire [31:0] ex_mem_AluOut_in,        // ALU result
     input  wire [31:0] ex_mem_B_in,             // RegFile RD2 (for sw)
-    input  wire [4:0]  ex_mem_RegDest_in,       // destination register (after RegDst mux)
+    input  wire [4:0]  ex_mem_RD_in,       // destination register (after RegDst mux)
 
     // ── MEM-stage control inputs ──────────────────────────────────
     input  wire        ex_mem_BranchEq_in,
@@ -31,7 +31,7 @@ module ex_mem (
     output reg         ex_mem_Zero_out,
     output reg  [31:0] ex_mem_AluOut_out,
     output reg  [31:0] ex_mem_B_out,
-    output reg  [4:0]  ex_mem_RegDest_out,
+    output reg  [4:0]  ex_mem_RD_out,
 
     // ── MEM-stage control outputs ─────────────────────────────────
     output reg         ex_mem_BranchEq_out,
@@ -50,7 +50,7 @@ module ex_mem (
             ex_mem_Zero_out         <= 1'b0;
             ex_mem_AluOut_out       <= 32'b0;
             ex_mem_B_out            <= 32'b0;
-            ex_mem_RegDest_out      <= 5'b0;
+            ex_mem_RD_out      <= 5'b0;
 
             ex_mem_BranchEq_out       <= 1'b0;
             ex_mem_BranchNe_out       <= 1'b0;
@@ -65,7 +65,7 @@ module ex_mem (
             ex_mem_Zero_out         <= ex_mem_Zero_in;
             ex_mem_AluOut_out       <= ex_mem_AluOut_in;
             ex_mem_B_out            <= ex_mem_B_in;
-            ex_mem_RegDest_out      <= ex_mem_RegDest_in;
+            ex_mem_RD_out      <= ex_mem_RD_in;
 
             ex_mem_BranchEq_out       <= ex_mem_BranchEq_in;
             ex_mem_BranchNe_out       <= ex_mem_BranchNe_in;

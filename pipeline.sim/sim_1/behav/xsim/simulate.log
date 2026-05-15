@@ -1,1 +1,15 @@
 Time resolution is 1 ps
+=== DESTINATION MEMORY (expect DEADBEEF) ===
+mem[0x20..0x23] = de ad be ef
+mem[0x24..0x27] = de ad be ef
+mem[0x28..0x2b] = de ad be ef
+mem[0x2c..0x2f] = de ad be ef
+mem[0x30..0x33] = 00 00 00 00
+mem[0x34..0x37] = 00 00 00 00
+mem[0x38..0x3b] = 00 00 00 00
+mem[0x3c..0x3f] = 00 00 00 00
+=== REGISTERS ===
+$1  = 0 (expect 0)
+$21 = 0x00000010 (expect 0x20)
+$22 = 0x00000030 (expect 0x40)
+$finish called at time : 2118 ns : File "C:/Vivado/CompArch/pipelined/pipelined.srcs/sim_1/new/pipelineTB_copyingArray.v" Line 142
