@@ -1,0 +1,25 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  --include "../../../../../../../../Xilinx/2025.1/Vivado/data/rsb/busdef" \
+"../../../../pipeline.srcs/sources_1/new/adder.v" \
+"../../../../pipeline.srcs/sources_1/imports/new/alu6.v" \
+"../../../../pipeline.srcs/sources_1/imports/new/aluControl.v" \
+"../../../../pipeline.srcs/sources_1/new/ex_mem.v" \
+"../../../../pipeline.srcs/sources_1/new/id_ex.v" \
+"../../../../pipeline.srcs/sources_1/new/if_id.v" \
+"../../../../pipeline.srcs/sources_1/imports/new/instructionMem.v" \
+"../../../../pipeline.srcs/sources_1/imports/new/mainControl.v" \
+"../../../../pipeline.srcs/sources_1/new/mem_wb.v" \
+"../../../../pipeline.srcs/sources_1/imports/new/memory.v" \
+"../../../../pipeline.srcs/sources_1/new/mux2.v" \
+"../../../../pipeline.srcs/sources_1/imports/new/pc.v" \
+"../../../../pipeline.srcs/sources_1/new/pipeline.v" \
+"../../../../pipeline.srcs/sources_1/imports/new/regFile.v" \
+"../../../../pipeline.srcs/sources_1/imports/new/shiftLeft2.v" \
+"../../../../pipeline.srcs/sources_1/imports/new/signExtend.v" \
+"../../../../pipeline.srcs/sim_1/new/pipelineTB_copyingArray.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

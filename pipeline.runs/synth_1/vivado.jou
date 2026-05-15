@@ -1,0 +1,24 @@
+#-----------------------------------------------------------
+# Vivado v2025.1 (64-bit)
+# SW Build 6140274 on Thu May 22 00:12:29 MDT 2025
+# IP Build 6138677 on Thu May 22 03:10:11 MDT 2025
+# SharedData Build 6139179 on Tue May 20 17:58:58 MDT 2025
+# Start of session at: Mon Mar 16 13:46:00 2026
+# Process ID         : 12432
+# Current directory  : C:/Vivado/CompArch/pipelined/pipelined.runs/synth_1
+# Command line       : vivado.exe -log pipeline.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source pipeline.tcl
+# Log file           : C:/Vivado/CompArch/pipelined/pipelined.runs/synth_1/pipeline.vds
+# Journal file       : C:/Vivado/CompArch/pipelined/pipelined.runs/synth_1\vivado.jou
+# Running On         : LAPTOP-QR3M58JR
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 26200
+# Processor Detail   : Intel(R) Core(TM) i5-9300H CPU @ 2.40GHz
+# CPU Frequency      : 2400 MHz
+# CPU Physical cores : 4
+# CPU Logical cores  : 8
+# Host memory        : 17009 MB
+# Swap memory        : 5100 MB
+# Total Virtual      : 22109 MB
+# Available Virtual  : 7234 MB
+#-----------------------------------------------------------
+source pipeline.tcl -notrace
