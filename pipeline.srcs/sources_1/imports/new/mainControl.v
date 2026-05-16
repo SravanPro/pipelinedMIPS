@@ -1,12 +1,5 @@
 `timescale 1ns / 1ps
 
-
-
-
-
-
-
-
 module mainControl(
     input      [5:0] opCode,
 
