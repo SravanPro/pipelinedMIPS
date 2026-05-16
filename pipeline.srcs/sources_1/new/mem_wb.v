@@ -1,28 +1,28 @@
 `timescale 1ns / 1ps
 
-// MEM/WB Pipeline Register
-// MEM control signals (Branch, MemRead, MemWrite) consumed in MEM - NOT passed.
-// Only WB control signals + datapath results pass through.
+
+
+
 
 module mem_wb (
     input  wire        clk,
     input  wire        reset,
 
-    // ── Datapath inputs ───────────────────────────────────────────
-    input  wire [31:0] mem_wb_LMD_in,        // Load Memory Data
-    input  wire [31:0] mem_wb_AluOut_in,      // ALU result (pass-through for non-load)
-    input  wire [4:0]  mem_wb_RD_in,     // destination register
 
-    // ── WB-stage control inputs ───────────────────────────────────
+    input  wire [31:0] mem_wb_LMD_in,
+    input  wire [31:0] mem_wb_AluOut_in,
+    input  wire [4:0]  mem_wb_RD_in,
+
+
     input  wire        mem_wb_RegWrite_in,
-    input  wire        mem_wb_MemToReg_in,    // 0=ALUOut, 1=LMD
+    input  wire        mem_wb_MemToReg_in,
 
-    // ── Datapath outputs ──────────────────────────────────────────
+
     output reg  [31:0] mem_wb_LMD_out,
     output reg  [31:0] mem_wb_AluOut_out,
     output reg  [4:0]  mem_wb_RD_out,
 
-    // ── WB-stage control outputs ──────────────────────────────────
+
     output reg         mem_wb_RegWrite_out,
     output reg         mem_wb_MemToReg_out
 );

@@ -3,7 +3,7 @@
 module pc(
     input        clock,
     input        reset,
-    input        pcStall,         // 1 = freeze PC (stall), 0 = normal update
+    input        pcStall,
     input [31:0] pcInVal,
     output reg [31:0] pcOutVal
 );
@@ -12,10 +12,10 @@ module pc(
         if (reset) begin
             pcOutVal <= 32'd0;
         end
-        else if (pcStall) begin   // stall: hold current PC
+        else if (pcStall) begin
             pcOutVal <= pcOutVal;
         end
-        else begin                // normal: update PC
+        else begin
             pcOutVal <= pcInVal;
         end
     end

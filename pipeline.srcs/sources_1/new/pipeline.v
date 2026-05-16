@@ -5,9 +5,9 @@ module pipeline (
     input wire reset
 );
 
-    // =========================================================
-    // IF STAGE
-    // =========================================================
+
+
+
     wire [31:0] pc_out;
     wire [31:0] pc_plus4;
     wire [31:0] pc_next;
@@ -32,9 +32,9 @@ module pipeline (
         .instruction (if_instruction)
     );
 
-    // =========================================================
-    // IF/ID REGISTER
-    // =========================================================
+
+
+
     wire [31:0] if_id_NPC;
     wire [31:0] if_id_IR;
 
@@ -49,9 +49,9 @@ module pipeline (
         .if_id_IR_out  (if_id_IR)
     );
 
-    // =========================================================
-    // ID STAGE
-    // =========================================================
+
+
+
     wire [5:0]  id_opcode = if_id_IR[31:26];
     wire [4:0]  id_RS     = if_id_IR[25:21];
     wire [4:0]  id_RT     = if_id_IR[20:16];
@@ -101,9 +101,9 @@ module pipeline (
         .rd2      (id_rd2)
     );
 
-    // =========================================================
-    // ID/EX REGISTER
-    // =========================================================
+
+
+
     wire [31:0] id_ex_NPC;
     wire [31:0] id_ex_A,   id_ex_B,   id_ex_Imm;
     wire [4:0]  id_ex_RS,  id_ex_RT,  id_ex_RD;
@@ -151,9 +151,9 @@ module pipeline (
         .id_ex_MemToReg_out (id_ex_MemToReg)
     );
 
-    // =========================================================
-    // EX STAGE
-    // =========================================================
+
+
+
     wire [1:0]  forwardA, forwardB;
     wire [31:0] forwardMuxA_out, forwardMuxB_out;
 
@@ -232,9 +232,9 @@ module pipeline (
         .sum (ex_branchTarget)
     );
 
-    // =========================================================
-    // EX/MEM REGISTER
-    // =========================================================
+
+
+
     wire [31:0] ex_mem_BranchTarget;
     wire        ex_mem_Zero;
     wire [31:0] ex_mem_AluOut;
@@ -271,9 +271,9 @@ module pipeline (
         .ex_mem_MemToReg_out     (ex_mem_MemToReg)
     );
 
-    // =========================================================
-    // MEM STAGE
-    // =========================================================
+
+
+
     wire mem_PCSrc;
     assign mem_PCSrc = (ex_mem_BranchEq & ex_mem_Zero) | (ex_mem_BranchNe & ~ex_mem_Zero);
 
@@ -295,9 +295,9 @@ module pipeline (
         .readData  (mem_readData)
     );
 
-    // =========================================================
-    // MEM/WB REGISTER
-    // =========================================================
+
+
+
     wire [31:0] mem_wb_LMD;
     wire [31:0] mem_wb_AluOut;
     wire [4:0]  mem_wb_RD;
@@ -318,9 +318,9 @@ module pipeline (
         .mem_wb_MemToReg_out(mem_wb_MemToReg)
     );
 
-    // =========================================================
-    // WB STAGE
-    // =========================================================
+
+
+
     mux2 #(.width(32)) MEMTOREG_MUX (
         .in0 (mem_wb_AluOut),
         .in1 (mem_wb_LMD),

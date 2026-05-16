@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 
-module memory #(parameter memorySizeInBytes = 128) // 32 locations sized 32bit
+module memory #(parameter memorySizeInBytes = 128)
 
 (
     input clock, reset,
@@ -16,7 +16,7 @@ module memory #(parameter memorySizeInBytes = 128) // 32 locations sized 32bit
     reg [7:0] mem [memorySizeInBytes-1 : 0];
     
     
-    // just initializing the meemory to random values, dont care.
+
     initial begin
             for(i = 0; i<memorySizeInBytes; i = i+1) begin
                 if(i[1:0] == 2'b11) mem[i] = (i+1)/4;

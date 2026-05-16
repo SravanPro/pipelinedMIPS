@@ -9,29 +9,29 @@ module aluControl(
 
     always @(*) begin
         case (aluOp)
-            4'b0000: op = 4'b0010;  // ADD  (lw/sw)
-            4'b0001: op = 4'b0110;  // SUB  (beq)
+            4'b0000: op = 4'b0010;
+            4'b0001: op = 4'b0110;
 
-            4'b0010: begin           // R-type: decode funct
+            4'b0010: begin
                 case (func)
-                    6'b100000: op = 4'b0010;  // ADD
-                    6'b100010: op = 4'b0110;  // SUB
-                    6'b100100: op = 4'b0000;  // AND
-                    6'b100101: op = 4'b0001;  // OR
-                    6'b101010: op = 4'b0111;  // SLT
-                    6'b100111: op = 4'b1000;  // NOR
-                    6'b100110: op = 4'b1001;  // XOR
-                    6'b000000:  op = 4'b1010;  // SLL
-                    6'b000010:  op = 4'b1011;  // SRL
-                    6'b000011:  op = 4'b1100;  // SRA
-                    6'b101100:  op = 4'b0100;  // NAND
-                    default: op = 4'b0010; // default ADD
+                    6'b100000: op = 4'b0010;
+                    6'b100010: op = 4'b0110;
+                    6'b100100: op = 4'b0000;
+                    6'b100101: op = 4'b0001;
+                    6'b101010: op = 4'b0111;
+                    6'b100111: op = 4'b1000;
+                    6'b100110: op = 4'b1001;
+                    6'b000000:  op = 4'b1010;
+                    6'b000010:  op = 4'b1011;
+                    6'b000011:  op = 4'b1100;
+                    6'b101100:  op = 4'b0100;
+                    default: op = 4'b0010;
                 endcase
             end
 
-            4'b0011: op = 4'b0111;  // SLT immediate (custom)
+            4'b0011: op = 4'b0111;
 
-            default: op = 4'b0010;  // fallback: ADD
+            default: op = 4'b0010;
         endcase
     end
 endmodule
