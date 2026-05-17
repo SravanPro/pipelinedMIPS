@@ -18,6 +18,7 @@ module alu(
             4'b0001: result = a | b;
             4'b0111: result = ($signed(a) < $signed(b)) ? 32'd1 : 32'd0;
 
+            4'b0101: result = { b[15:0], 16'b0 };
 
             4'b0100: result = ~(a & b);
             4'b1000: result = ~(a | b);

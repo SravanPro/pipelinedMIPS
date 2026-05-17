@@ -84,9 +84,33 @@ module pipeline (
         .out (id_signImm)
     );
 
+    wire [31:0] id_zeroImm;
+    zeroExtend ZEXT (
+        .in  (id_imm16),
+        .out (id_zeroImm)
+    );
+
+    wire [31:0] id_imm;
+    wire [1:0] id_immSelect;
+    sext_or_zext_control SEXT_OR_ZEXT_CTRL (
+        .aluOp (id_aluOp),
+        .sext_or_zext (id_immSelect)
+    );
+    
+    mux2 #(.width(32)) IMM_MUX (
+        .in0 (id_signImm),
+        .in1 (id_zeroImm),
+        .s   (id_immSelect),
+        .out (id_imm)
+    );
+
     wire        wb_regWrite;
     wire [4:0]  wb_regDest;
     wire [31:0] wb_writeData;
+    wire [31:0] mem_wb_LMD;
+    wire [31:0] mem_wb_AluOut;
+    wire [4:0]  mem_wb_RD;
+    wire        mem_wb_RegWrite, mem_wb_MemToReg;
 
     wire [31:0] id_rd1, id_rd2;
     regFile REGFILE (
@@ -105,7 +129,8 @@ module pipeline (
 
 
     wire [31:0] id_ex_NPC;
-    wire [31:0] id_ex_A,   id_ex_B,   id_ex_Imm;
+    wire [31:0] id_ex_A,   id_ex_B;
+    wire [31:0] id_ex_Imm;
     wire [4:0]  id_ex_RS,  id_ex_RT,  id_ex_RD;
     wire        id_ex_RegDst, id_ex_ALUSrc;
     wire [3:0]  id_ex_ALUOp;
@@ -120,7 +145,7 @@ module pipeline (
         .id_ex_NPC_in       (if_id_NPC),
         .id_ex_A_in         (id_rd1),
         .id_ex_B_in         (id_rd2),
-        .id_ex_Imm_in       (id_signImm),
+        .id_ex_Imm_in       (id_imm),
         .id_ex_RS_in        (id_RS),
         .id_ex_RT_in        (id_RT),
         .id_ex_RD_in        (id_RD),
@@ -156,6 +181,14 @@ module pipeline (
 
     wire [1:0]  forwardA, forwardB;
     wire [31:0] forwardMuxA_out, forwardMuxB_out;
+    wire [31:0] ex_mem_BranchTarget;
+    wire        ex_mem_Zero;
+    wire [31:0] ex_mem_AluOut;
+    wire [31:0] ex_mem_B;
+    wire [4:0]  ex_mem_RD;
+    wire        ex_mem_BranchEq, ex_mem_BranchNe;
+    wire        ex_mem_MemRead, ex_mem_MemWrite;
+    wire        ex_mem_RegWrite, ex_mem_MemToReg;
 
     forwardingUnit FORWARD_UNIT (
         .id_ex_RS        (id_ex_RS),
@@ -232,18 +265,6 @@ module pipeline (
         .sum (ex_branchTarget)
     );
 
-
-
-
-    wire [31:0] ex_mem_BranchTarget;
-    wire        ex_mem_Zero;
-    wire [31:0] ex_mem_AluOut;
-    wire [31:0] ex_mem_B;
-    wire [4:0]  ex_mem_RD;
-    wire        ex_mem_BranchEq, ex_mem_BranchNe;
-    wire        ex_mem_MemRead, ex_mem_MemWrite;
-    wire        ex_mem_RegWrite, ex_mem_MemToReg;
-
     ex_mem EX_MEM (
         .clk                     (clk),
         .reset                   (reset),
@@ -294,14 +315,6 @@ module pipeline (
         .writeData (ex_mem_B),
         .readData  (mem_readData)
     );
-
-
-
-
-    wire [31:0] mem_wb_LMD;
-    wire [31:0] mem_wb_AluOut;
-    wire [4:0]  mem_wb_RD;
-    wire        mem_wb_RegWrite, mem_wb_MemToReg;
 
     mem_wb MEM_WB (
         .clk                (clk),

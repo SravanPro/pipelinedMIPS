@@ -37,6 +37,7 @@ module mainControl(
                 aluOp    = 4'b0010;
             end
 
+            //lw
             6'b100011: begin
                 aluSrc   = 1'b1;
                 memToReg = 1'b1;
@@ -45,39 +46,71 @@ module mainControl(
                 aluOp    = 4'b0000;
             end
 
+            //sw
             6'b101011: begin
                 aluSrc   = 1'b1;
                 memWrite = 1'b1;
                 aluOp    = 4'b0000;
             end
              
+            //beq
             6'b000100: begin
                 branchEq = 1'b1;
                 aluOp    = 4'b0001;
             end
+            //bne
             6'b000101: begin
                 branchNe = 1'b1;
                 aluOp    = 4'b0001;
             end
 
+            //j
             6'b000010: begin
                 jump     = 1'b1;
             end
 
 
-            6'b001010: begin
-                aluSrc   = 1'b1;
-                regWrite = 1'b1;
-                aluOp    = 4'b0011;
-            end
-         
-         
+            //addi
             6'b001000: begin
                 aluSrc   = 1'b1;
                 regWrite = 1'b1;
                 aluOp    = 4'b0000;
             end     
+
+            //andi
+            6'b001100: begin
+                aluSrc   = 1'b1;
+                regWrite = 1'b1;
+                aluOp    = 4'b0011;
+            end  
+
+            //ori
+            6'b001101: begin
+                aluSrc   = 1'b1;
+                regWrite = 1'b1;
+                aluOp    = 4'b0100;
+            end    
+
+            //xori
+            6'b001110: begin
+                aluSrc   = 1'b1;
+                regWrite = 1'b1;
+                aluOp    = 4'b0101;
+            end   
             
+            //slti
+            6'b001010: begin
+                aluSrc   = 1'b1;
+                regWrite = 1'b1;
+                aluOp    = 4'b0110;
+            end
+
+            //lui
+            6'b001111: begin
+                aluSrc   = 1'b1;
+                regWrite = 1'b1;
+                aluOp    = 4'b0111;
+            end
 
             default: begin
 

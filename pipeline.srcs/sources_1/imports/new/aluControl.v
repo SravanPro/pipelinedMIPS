@@ -11,6 +11,17 @@ module aluControl(
         case (aluOp)
             4'b0000: op = 4'b0010;
             4'b0001: op = 4'b0110;
+             
+            //andi
+            4'b0011: op = 4'b0000; 
+            //ori
+            4'b0100: op = 4'b0001;
+            //xori
+            4'b0101: op = 4'b1001;
+            //slti:
+            4'b0110: op = 4'b0111;
+            //lui
+            4'b0111: op = 4'b0101;
 
             4'b0010: begin
                 case (func)
@@ -28,8 +39,6 @@ module aluControl(
                     default: op = 4'b0010;
                 endcase
             end
-
-            4'b0011: op = 4'b0111;
 
             default: op = 4'b0010;
         endcase

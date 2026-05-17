@@ -10,6 +10,25 @@ module pipelineTB_copyingArray();
         .reset (reset)
     );
 
+    // Probe wires for quick waveform viewing (no manual drag/drop needed)
+    // Source words: 0x00, 0x04, 0x08, 0x0C
+    wire [31:0] src_w0 = {uut.DMEM.mem[8'h00], uut.DMEM.mem[8'h01], uut.DMEM.mem[8'h02], uut.DMEM.mem[8'h03]};
+    wire [31:0] src_w1 = {uut.DMEM.mem[8'h04], uut.DMEM.mem[8'h05], uut.DMEM.mem[8'h06], uut.DMEM.mem[8'h07]};
+    wire [31:0] src_w2 = {uut.DMEM.mem[8'h08], uut.DMEM.mem[8'h09], uut.DMEM.mem[8'h0A], uut.DMEM.mem[8'h0B]};
+    wire [31:0] src_w3 = {uut.DMEM.mem[8'h0C], uut.DMEM.mem[8'h0D], uut.DMEM.mem[8'h0E], uut.DMEM.mem[8'h0F]};
+
+    // Destination words: 0x20, 0x24, 0x28, 0x2C
+    wire [31:0] dst_w0 = {uut.DMEM.mem[8'h20], uut.DMEM.mem[8'h21], uut.DMEM.mem[8'h22], uut.DMEM.mem[8'h23]};
+    wire [31:0] dst_w1 = {uut.DMEM.mem[8'h24], uut.DMEM.mem[8'h25], uut.DMEM.mem[8'h26], uut.DMEM.mem[8'h27]};
+    wire [31:0] dst_w2 = {uut.DMEM.mem[8'h28], uut.DMEM.mem[8'h29], uut.DMEM.mem[8'h2A], uut.DMEM.mem[8'h2B]};
+    wire [31:0] dst_w3 = {uut.DMEM.mem[8'h2C], uut.DMEM.mem[8'h2D], uut.DMEM.mem[8'h2E], uut.DMEM.mem[8'h2F]};
+
+    // Loop registers used by the copy program
+    wire [31:0] r1_count = uut.REGFILE.regBank[1];
+    wire [31:0] r5_data  = uut.REGFILE.regBank[5];
+    wire [31:0] r21_src  = uut.REGFILE.regBank[21];
+    wire [31:0] r22_dst  = uut.REGFILE.regBank[22];
+
     always #5 clk = ~clk;
 
     task loadInstr;
