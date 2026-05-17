@@ -13,6 +13,21 @@ module pipeline (
     wire [31:0] pc_next;
     wire [31:0] if_instruction;
 
+    wire [31:0] if_id_NPC;
+    wire [31:0] if_id_IR;
+    
+    wire [5:0]  id_opcode = if_id_IR[31:26];
+    wire [4:0]  id_RS     = if_id_IR[25:21];
+    wire [4:0]  id_RT     = if_id_IR[20:16];
+    wire [4:0]  id_RD     = if_id_IR[15:11];
+    wire [5:0]  id_funct  = if_id_IR[5:0];
+    wire [15:0] id_imm16  = if_id_IR[15:0];
+
+    wire        id_regDst, id_aluSrc, id_memToReg;
+    wire        id_regWrite, id_memRead, id_memWrite;
+    wire        id_branchEq, id_branchNe, id_jump;
+    wire [3:0]  id_aluOp;
+
     pc PC (
         .clock    (clk),
         .reset    (reset),
@@ -35,34 +50,39 @@ module pipeline (
 
 
 
-    wire [31:0] if_id_NPC;
-    wire [31:0] if_id_IR;
+
 
     if_id IF_ID (
         .clk           (clk),
         .reset         (reset),
         .if_id_stall   (1'b0),
-        .if_id_flush   (1'b0),
+        .if_id_flush   (id_jump),
         .if_id_NPC_in  (pc_plus4),
         .if_id_IR_in   (if_instruction),
         .if_id_NPC_out (if_id_NPC),
         .if_id_IR_out  (if_id_IR)
     );
 
+    wire [31:0] jumpAddress;
+    jTypeAddressProcessor JUMP_ADDR_PROC (
+        .if_id_IR (if_id_IR),
+        .if_id_NPC (if_id_NPC),
+        .jumpAddress (jumpAddress)
+     );
+
+    wire [31:0] branchMuxOut;
+
+    mux2 #(.width(32)) JUMP_MUX (
+        .in0 (branchMuxOut),
+        .in1 (jumpAddress),
+        .s   (id_jump), // Check if opcode is J
+        .out (pc_next)
+    );
+
+    
 
 
 
-    wire [5:0]  id_opcode = if_id_IR[31:26];
-    wire [4:0]  id_RS     = if_id_IR[25:21];
-    wire [4:0]  id_RT     = if_id_IR[20:16];
-    wire [4:0]  id_RD     = if_id_IR[15:11];
-    wire [5:0]  id_funct  = if_id_IR[5:0];
-    wire [15:0] id_imm16  = if_id_IR[15:0];
-
-    wire        id_regDst, id_aluSrc, id_memToReg;
-    wire        id_regWrite, id_memRead, id_memWrite;
-    wire        id_branchEq, id_branchNe, id_jump;
-    wire [3:0]  id_aluOp;
 
     mainControl CTRL (
         .opCode   (id_opcode),
@@ -91,7 +111,7 @@ module pipeline (
     );
 
     wire [31:0] id_imm;
-    wire [1:0] id_immSelect;
+    wire id_immSelect;
     sext_or_zext_control SEXT_OR_ZEXT_CTRL (
         .aluOp (id_aluOp),
         .sext_or_zext (id_immSelect)
@@ -302,7 +322,7 @@ module pipeline (
         .in0 (pc_plus4),
         .in1 (ex_mem_BranchTarget),
         .s   (mem_PCSrc),
-        .out (pc_next)
+        .out (branchMuxOut)
     );
 
     wire [31:0] mem_readData;
