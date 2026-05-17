@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 
-module memory #(parameter memorySizeInBytes = 128)
+module memory #(parameter memorySizeInBytes = 512)
 
 (
     input clock, reset,
