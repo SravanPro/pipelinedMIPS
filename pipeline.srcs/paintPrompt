@@ -1,0 +1,141 @@
+I have a makeshift pipelined MIPS CPU in Verilog/Vivado and want to implement a painter program on a 128×64 display using memory-mapped inputs.
+
+Inputs (buttons)
+
+
+
+
+
+Up
+
+
+
+Down
+
+
+
+Left
+
+
+
+Right
+
+
+
+Draw (pen down: moving draws pixels)
+
+
+
+Erase (held while moving erases pixels)
+
+
+
+Reset (clears canvas and returns pointer to center)
+
+Pointer behavior
+
+
+
+
+
+Pointer is 1x1 pixel.
+
+
+
+X and Y coordinates stored in separate registers.
+
+
+
+Display:
+
+
+
+
+
+X: 128 positions (0–127)
+
+
+
+Y: 64 positions (0–63)
+
+
+
+On reset, pointer goes to the center-most valid pixel, choosing the top-right pixel among the 4 central pixels.
+
+Functionality
+
+
+
+
+
+Move pointer with directional inputs.
+
+
+
+If Draw is active, movement leaves a trail.
+
+
+
+If Draw is inactive, pointer moves without drawing.
+
+
+
+If Erase is active, movement erases existing pixels.
+
+
+
+Reset clears the entire canvas and re-centers the pointer.
+
+should be easy, since you already know the things my design is capable of.
+
+thing is, for now, DO NOT implement a slowing down mechanism.
+
+so for every scan cycle the memory mapped input is seen on, the pointer moves.
+
+assume the memory mapped input is in a special mapped to instr memory and those locations are exposed via input pins to the instrction memoy, and those inputs: are also the parent module's inputs, so i can directly mess with parent modules inputs and use them as joysticks., i want you to make changes in the memory and the parent module,
+to accomodate these changes.
+
+now,coming to the testing of the program : always remember:
+3 nops before JR and branch instructions, coz hazard handling not done very well...
+
+the coordinates of the puck, 64*128  display, the 128 is horizontal, the bottom 
+left corner is 0,0 top is 63,127
+testbench:
+
+reset. xhould initialize on centre,
+move cursor to right via pushing the right button, make it go to the extreme right, and 
+dont take finger off of the right button even after it reaches,
+want to test a boundary condition.
+then extreme left 
+then back to centre.
+
+reset
+
+extreme up
+extreme down
+
+reset
+
+x and y coordinates to be displayed on reg 1 and 2, we are only testing cursor, so don't bother baout the frame
+buffer.
+
+note that the reset for the game and the reset for the entire design are different. distinguish between them.
+
+give me a full cahngelog, if new omodules creted, or existing moduels changed, give full code idk.
+and the registers 1 and 2, use uut. technique i don't wanna manually add them.i jsut wanna see the inputs clock,
+reset, game reset, up, down, left, right, reg2, reg1.
+
+only inclide others if you have to.
+
+
+
+
+assuem that the mem mapped inputs arebeing given by a super fast being capable of sewtiching keys in the scale of megaherts, able to catch up with clock cycles (in real life, ill ahve to make a workaround somehow, but for now, testbench hsould be able to press and unpress  whenver you want.)
+
+also, the exact coordinates valeis should be given on the registers as it is, like left corner is 0,0 top is 63,127
+
+
+
+give me this code in a fashion similar to the TB2, okay? lliek the lad instrufction and all..
+
+make no msitakes, work on hte 1st try

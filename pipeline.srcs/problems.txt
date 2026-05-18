@@ -1,0 +1,10 @@
+Yes, only 2 remaining known issues to avoid in code:
+
+JR hazard — 3 NOPs before JR if any of the preceding 3 instructions write to JR's source register (realistically 1 NOP suffices for the immediately preceding instruction, but 3 to be completely safe across all pipeline stages)
+lw → 
+1. branch hazard — don't place a branch immediately after an lw that loads into a register the branch reads
+2. insert 2 NOPs between any instruction that writes a register and a branch that reads it. 
+
+so to keep things simple:
+
+3 nops before JR and branch instructions

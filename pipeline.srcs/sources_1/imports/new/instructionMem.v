@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 
-module instructionMem #(parameter instructionMemSizeInBytes = 256)
+module instructionMem #(parameter instructionMemSizeInBytes = 512)
 
 (
     input [31:0] pcVal,
