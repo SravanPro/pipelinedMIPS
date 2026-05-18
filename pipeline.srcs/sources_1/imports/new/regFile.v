@@ -29,7 +29,7 @@ module regFile(
         end
         
         else begin
-            if(regWrite) begin
+            if(regWrite && wn != 5'd0) begin
                 regBank[wn] <= wd;
             end
         end

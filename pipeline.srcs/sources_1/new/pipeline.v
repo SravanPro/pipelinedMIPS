@@ -56,7 +56,7 @@ module pipeline (
         .clk           (clk),
         .reset         (reset),
         .if_id_stall   (1'b0),
-        .if_id_flush   (id_jump),
+        .if_id_flush   (id_jump | id_jal),
         .if_id_NPC_in  (pc_plus4),
         .if_id_IR_in   (if_instruction),
         .if_id_NPC_out (if_id_NPC),
@@ -75,7 +75,7 @@ module pipeline (
     mux2 #(.width(32)) JUMP_MUX (
         .in0 (branchMuxOut),
         .in1 (jumpAddress),
-        .s   (id_jump), // Check if opcode is J
+        .s (id_jump | id_jal),
         .out (pc_next)
     );
 
