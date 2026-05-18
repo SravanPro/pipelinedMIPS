@@ -12,6 +12,7 @@ module mainControl(
     output reg       branchEq,
     output reg       branchNe,
     output reg       jump,
+    output reg       jal,
     output reg [3:0] aluOp
 );
 
@@ -28,6 +29,7 @@ module mainControl(
         branchNe   = 1'b0;
         
         jump     = 1'b0;
+        jal      = 1'b0;
         aluOp    = 4'b0000;
 
         case (opCode)
@@ -64,10 +66,6 @@ module mainControl(
                 aluOp    = 4'b0001;
             end
 
-            //j
-            6'b000010: begin
-                jump     = 1'b1;
-            end
 
 
             //addi
@@ -111,6 +109,19 @@ module mainControl(
                 regWrite = 1'b1;
                 aluOp    = 4'b0111;
             end
+
+            //j
+            6'b000010: begin
+                jump     = 1'b1;
+            end
+
+            //jal
+            6'b000011: begin
+                jal      = 1'b1;
+                jump     = 1'b1;
+                regWrite = 1'b1;
+            end
+
 
             default: begin
 

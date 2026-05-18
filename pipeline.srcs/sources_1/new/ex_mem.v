@@ -9,7 +9,7 @@ module ex_mem (
     input  wire        clk,
     input  wire        reset,
 
-
+    input  wire [31:0] ex_mem_NPC_in,
     input  wire [31:0] ex_mem_BranchTarget_in,
     input  wire        ex_mem_Zero_in,
     input  wire [31:0] ex_mem_AluOut_in,
@@ -25,8 +25,10 @@ module ex_mem (
 
     input  wire        ex_mem_RegWrite_in,
     input  wire        ex_mem_MemToReg_in,
+    input  wire        ex_mem_Jal_in,
 
 
+    output reg  [31:0] ex_mem_NPC_out,
     output reg  [31:0] ex_mem_BranchTarget_out,
     output reg         ex_mem_Zero_out,
     output reg  [31:0] ex_mem_AluOut_out,
@@ -41,11 +43,13 @@ module ex_mem (
 
 
     output reg         ex_mem_RegWrite_out,
-    output reg         ex_mem_MemToReg_out
+    output reg         ex_mem_MemToReg_out,
+    output reg         ex_mem_Jal_out
 );
 
     always @(posedge clk or posedge reset) begin
         if (reset) begin
+            ex_mem_NPC_out        <= 32'b0;
             ex_mem_BranchTarget_out <= 32'b0;
             ex_mem_Zero_out         <= 1'b0;
             ex_mem_AluOut_out       <= 32'b0;
@@ -59,8 +63,10 @@ module ex_mem (
 
             ex_mem_RegWrite_out     <= 1'b0;
             ex_mem_MemToReg_out     <= 1'b0;
+            ex_mem_Jal_out        <= 1'b0;
         end
         else begin
+            ex_mem_NPC_out        <= ex_mem_NPC_in;
             ex_mem_BranchTarget_out <= ex_mem_BranchTarget_in;
             ex_mem_Zero_out         <= ex_mem_Zero_in;
             ex_mem_AluOut_out       <= ex_mem_AluOut_in;
@@ -74,6 +80,7 @@ module ex_mem (
 
             ex_mem_RegWrite_out     <= ex_mem_RegWrite_in;
             ex_mem_MemToReg_out     <= ex_mem_MemToReg_in;
+            ex_mem_Jal_out        <= ex_mem_Jal_in;
         end
     end
 endmodule

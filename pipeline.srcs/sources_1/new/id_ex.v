@@ -34,6 +34,7 @@ module id_ex (
 
     input  wire        id_ex_RegWrite_in,
     input  wire        id_ex_MemToReg_in,
+    input  wire        id_ex_Jal_in,
 
 
     output reg  [31:0] id_ex_NPC_out,
@@ -57,7 +58,8 @@ module id_ex (
 
 
     output reg         id_ex_RegWrite_out,
-    output reg         id_ex_MemToReg_out
+    output reg         id_ex_MemToReg_out,
+    output reg         id_ex_Jal_out
 );
 
     always @(posedge clk or posedge reset) begin
@@ -78,6 +80,7 @@ module id_ex (
             id_ex_MemWrite_out <= 1'b0;
             id_ex_RegWrite_out <= 1'b0;
             id_ex_MemToReg_out <= 1'b0;
+            id_ex_Jal_out      <= 1'b0;
         end
         else if (id_ex_stall) begin
             id_ex_NPC_out      <= 32'b0;
@@ -96,6 +99,7 @@ module id_ex (
             id_ex_MemWrite_out <= 1'b0;
             id_ex_RegWrite_out <= 1'b0;
             id_ex_MemToReg_out <= 1'b0;
+            id_ex_Jal_out      <= 1'b0;
         end
         else begin
             id_ex_NPC_out      <= id_ex_NPC_in;
@@ -114,6 +118,7 @@ module id_ex (
             id_ex_MemWrite_out <= id_ex_MemWrite_in;
             id_ex_RegWrite_out <= id_ex_RegWrite_in;
             id_ex_MemToReg_out <= id_ex_MemToReg_in;
+            id_ex_Jal_out      <= id_ex_Jal_in;
         end
     end
 endmodule
