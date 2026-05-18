@@ -9,6 +9,8 @@ module id_ex (
     input  wire        clk,
     input  wire        reset,
     input  wire        id_ex_stall,
+    input  wire        id_ex_flush,
+
 
 
     input  wire [31:0] id_ex_NPC_in,
@@ -63,7 +65,8 @@ module id_ex (
 );
 
     always @(posedge clk or posedge reset) begin
-        if (reset) begin
+        if (reset || id_ex_flush) begin
+
             id_ex_NPC_out      <= 32'b0;
             id_ex_A_out        <= 32'b0;
             id_ex_B_out        <= 32'b0;

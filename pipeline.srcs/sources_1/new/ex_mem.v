@@ -8,6 +8,8 @@
 module ex_mem (
     input  wire        clk,
     input  wire        reset,
+    input  wire        ex_mem_flush,
+
 
     input  wire [31:0] ex_mem_NPC_in,
     input  wire [31:0] ex_mem_BranchTarget_in,
@@ -48,7 +50,8 @@ module ex_mem (
 );
 
     always @(posedge clk or posedge reset) begin
-        if (reset) begin
+        if (reset || ex_mem_flush) begin
+
             ex_mem_NPC_out        <= 32'b0;
             ex_mem_BranchTarget_out <= 32'b0;
             ex_mem_Zero_out         <= 1'b0;

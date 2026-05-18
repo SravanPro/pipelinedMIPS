@@ -36,6 +36,7 @@ module aluControl(
                     6'b000010:  op = 4'b1011;
                     6'b000011:  op = 4'b1100;
                     6'b101100:  op = 4'b0100;
+                    6'b001000:  op = 4'b0100; // jr
                     default: op = 4'b0010;
                 endcase
             end

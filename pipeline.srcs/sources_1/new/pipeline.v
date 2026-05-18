@@ -1,5 +1,12 @@
 `timescale 1ns / 1ps
 
+/*
+Hazard reminder: 
+    If the instruction immediately before JR writes to JR's source register, 
+    id_rd1 will be stale. 
+    Insert a NOP before JR to be safe until you add stall logic.
+*/
+
 module pipeline (
     input wire clk,
     input wire reset
@@ -25,13 +32,17 @@ module pipeline (
 
     wire        id_regDst, id_aluSrc, id_memToReg;
     wire        id_regWrite, id_memRead, id_memWrite;
-    wire        id_branchEq, id_branchNe, id_jump, id_jal;
+    wire        id_branchEq, id_branchNe, id_jump, id_jal, id_jr;
     wire [3:0]  id_aluOp;
+
+    wire hdu_PCWrite, hdu_IF_IDWrite, hdu_ID_EXStall;
+
 
     pc PC (
         .clock    (clk),
         .reset    (reset),
-        .pcStall  (1'b0),
+        .pcStall  (~hdu_PCWrite),
+
         .pcInVal  (pc_next),
         .pcOutVal (pc_out)
     );
@@ -51,12 +62,14 @@ module pipeline (
 
 
 
+    wire mem_PCSrc;
 
     if_id IF_ID (
         .clk           (clk),
         .reset         (reset),
-        .if_id_stall   (1'b0),
-        .if_id_flush   (id_jump | id_jal),
+        .if_id_stall (~hdu_IF_IDWrite),
+        .if_id_flush  (id_jump | id_jal | id_jr | mem_PCSrc),  // add mem_PCSrc
+
         .if_id_NPC_in  (pc_plus4),
         .if_id_IR_in   (if_instruction),
         .if_id_NPC_out (if_id_NPC),
@@ -71,15 +84,24 @@ module pipeline (
      );
 
     wire [31:0] branchMuxOut;
+    wire [31:0] jumpMuxOut;
 
     mux2 #(.width(32)) JUMP_MUX (
         .in0 (branchMuxOut),
         .in1 (jumpAddress),
         .s (id_jump | id_jal),
+        .out (jumpMuxOut)
+    );
+
+
+    wire [31:0] id_rd1, id_rd2;
+    mux2 #(.width(32)) JR_MUX (
+        .in0 (jumpMuxOut),
+        .in1 (id_rd1),
+        .s (id_jr),
         .out (pc_next)
     );
 
-    
 
 
 
@@ -97,6 +119,34 @@ module pipeline (
         .jump     (id_jump),
         .jal      (id_jal),
         .aluOp    (id_aluOp)
+    );
+
+    jrControl JR_CTRL (
+        .opcode (id_opcode),
+        .funct  (id_funct),
+        .jr     (id_jr)
+    );
+
+
+    wire [31:0] id_ex_NPC;
+    wire [31:0] id_ex_A,   id_ex_B;
+    wire [31:0] id_ex_Imm;
+    wire [4:0]  id_ex_RS,  id_ex_RT,  id_ex_RD;
+    wire        id_ex_RegDst, id_ex_ALUSrc;
+    wire [3:0]  id_ex_ALUOp;
+    wire        id_ex_BranchEq, id_ex_BranchNe;
+    wire        id_ex_MemRead, id_ex_MemWrite;
+    wire        id_ex_RegWrite, id_ex_MemToReg;
+    wire        id_ex_Jal;
+
+    hazardDetectionUnit HDU (
+        .id_ex_MemRead (id_ex_MemRead),
+        .id_ex_RT      (id_ex_RT),
+        .if_id_RS      (id_RS),
+        .if_id_RT      (id_RT),
+        .PCWrite       (hdu_PCWrite),
+        .IF_IDWrite    (hdu_IF_IDWrite),
+        .ID_EXStall    (hdu_ID_EXStall)
     );
 
     wire [31:0] id_signImm;
@@ -138,7 +188,6 @@ module pipeline (
     wire        mem_wb_Jal;
 
 
-    wire [31:0] id_rd1, id_rd2;
     regFile REGFILE (
         .clock    (clk),
         .reset    (reset),
@@ -154,22 +203,14 @@ module pipeline (
 
 
 
-    wire [31:0] id_ex_NPC;
-    wire [31:0] id_ex_A,   id_ex_B;
-    wire [31:0] id_ex_Imm;
-    wire [4:0]  id_ex_RS,  id_ex_RT,  id_ex_RD;
-    wire        id_ex_RegDst, id_ex_ALUSrc;
-    wire [3:0]  id_ex_ALUOp;
-    wire        id_ex_BranchEq, id_ex_BranchNe;
-    wire        id_ex_MemRead, id_ex_MemWrite;
-    wire        id_ex_RegWrite, id_ex_MemToReg;
-    wire        id_ex_Jal;
 
 
     id_ex ID_EX (
         .clk                (clk),
         .reset              (reset),
-        .id_ex_stall        (1'b0),
+        .id_ex_flush  (mem_PCSrc),   // new port
+
+        .id_ex_stall (hdu_ID_EXStall),
         .id_ex_NPC_in       (if_id_NPC),
         .id_ex_A_in         (id_rd1),
         .id_ex_B_in         (id_rd2),
@@ -305,10 +346,13 @@ module pipeline (
         .sum (ex_branchTarget)
     );
 
+
     ex_mem EX_MEM (
         .clk                     (clk),
         .reset                   (reset),
         .ex_mem_NPC_in      (id_ex_NPC),
+        .ex_mem_flush (mem_PCSrc),   // new port
+
 
         .ex_mem_BranchTarget_in  (ex_branchTarget),
         .ex_mem_Zero_in          (ex_zero),
@@ -341,7 +385,6 @@ module pipeline (
 
 
 
-    wire mem_PCSrc;
     assign mem_PCSrc = (ex_mem_BranchEq & ex_mem_Zero) | (ex_mem_BranchNe & ~ex_mem_Zero);
 
     mux2 #(.width(32)) PC_MUX (

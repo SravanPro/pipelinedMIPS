@@ -39,6 +39,8 @@ module mainControl(
                 aluOp    = 4'b0010;
             end
 
+
+
             //lw
             6'b100011: begin
                 aluSrc   = 1'b1;
@@ -118,7 +120,6 @@ module mainControl(
             //jal
             6'b000011: begin
                 jal      = 1'b1;
-                jump     = 1'b1;
                 regWrite = 1'b1;
             end
 
