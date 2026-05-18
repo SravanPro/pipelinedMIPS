@@ -16,9 +16,9 @@ module regFile(
 
      reg [31:0] regBank [31:0];
      reg [7:0] i;
-     
-     assign rd1 = regBank[rn1];
-     assign rd2 = regBank[rn2];
+        
+    assign rd1 = (regWrite && wn != 5'd0 && wn == rn1) ? wd : regBank[rn1];
+    assign rd2 = (regWrite && wn != 5'd0 && wn == rn2) ? wd : regBank[rn2];
      
      always @(posedge clock or posedge reset) begin
      

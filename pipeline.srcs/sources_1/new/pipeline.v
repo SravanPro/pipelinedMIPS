@@ -7,9 +7,10 @@ Hazard reminder:
     Insert a NOP before JR to be safe until you add stall logic.
 */
 
-module pipeline (
+module pipeline #(parameter inputs = 256)(
     input wire clk,
-    input wire reset
+    input wire reset,
+    input wire [inputs-1:0] memMappedIO
 );
 
 
@@ -402,9 +403,10 @@ module pipeline (
         .memRead   (ex_mem_MemRead),
         .address   (ex_mem_AluOut),
         .writeData (ex_mem_B),
-        .readData  (mem_readData)
+        .readData  (mem_readData),
+        .memMappedIO ( { {256-inputs{1'b0}}, memMappedIO} )
     );
-
+    
 
     mem_wb MEM_WB (
         .clk                (clk),

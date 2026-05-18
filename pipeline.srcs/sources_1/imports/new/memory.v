@@ -1,14 +1,15 @@
 `timescale 1ns / 1ps
 
 
-module memory #(parameter memorySizeInBytes = 512)
+module memory #(parameter memorySizeInBytes = 512, parameter ioWidth = 256)
 
 (
     input clock, reset,
     input memWrite, memRead,
     input [31:0] address,
     input [31:0] writeData,
-    output [31:0] readData
+    input [ioWidth-1:0] memMappedIO,
+    output reg [31:0]  readData
     
 );
 
@@ -25,8 +26,24 @@ module memory #(parameter memorySizeInBytes = 512)
     end
     
     
-    assign readData = 
-    memRead ? {mem[address], mem[address + 1], mem[address + 2], mem[address + 3]} : 32'd0;
+    always @(*) begin
+        if(memRead) begin
+            if(address[31:8] != 24'hFFFFFF) begin
+                readData = {mem[address], mem[address + 1], mem[address + 2], mem[address + 3]};
+            end
+            else begin
+                if(address[7:0] < ioWidth) begin
+                    readData = {32{memMappedIO[address[7:0]]}};
+                end 
+                
+                else begin
+                    readData = 32'b0;
+                end
+            end
+        end
+
+        else readData = 0;
+    end
   
     always @(posedge clock or posedge reset) begin
     
@@ -40,11 +57,18 @@ module memory #(parameter memorySizeInBytes = 512)
         
         else begin
             if(memWrite) begin
-                mem[address]     <= writeData[31:24];
-                mem[address + 1] <= writeData[23:16];
-                mem[address + 2] <= writeData[15: 8];
-                mem[address + 3] <= writeData[ 7: 0];          
+
+                if(address[31:8] != 24'hFFFFFF) begin
+                    mem[address]     <= writeData[31:24];
+                    mem[address + 1] <= writeData[23:16];
+                    mem[address + 2] <= writeData[15: 8];
+                    mem[address + 3] <= writeData[ 7: 0];  
+                end        
+
+               
             end
+
+
         end
     end
     
