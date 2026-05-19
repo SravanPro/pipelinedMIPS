@@ -37,6 +37,9 @@ module aluControl(
                     6'b000011:  op = 4'b1100;
                     6'b101100:  op = 4'b0100;
                     6'b001000:  op = 4'b0100; // jr
+                    6'b000100: op = 4'b1010; // sllv
+                    6'b000110: op = 4'b1011; // srlv
+                    6'b000111: op = 4'b1100; // srav
                     default: op = 4'b0010;
                 endcase
             end

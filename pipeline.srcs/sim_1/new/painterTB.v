@@ -28,9 +28,18 @@ module painterTB ();
     assign mmio_in[6] = btn_game_reset;
 
     wire [8191:0] framebuffer = uut.framebuffer;
-    wire [31:0]   X           = uut.REGFILE.regBank[1];
-    wire [31:0]   Y           = uut.REGFILE.regBank[2];
-        
+    wire memWrite = uut.DMEM.memWrite;
+    
+    wire [31:0]   r1_X           = uut.REGFILE.regBank[1];
+    wire [31:0]   r2_Y          = uut.REGFILE.regBank[2];
+    wire [31:0]   right           = uut.REGFILE.regBank[12];
+    wire [31:0]   left          = uut.REGFILE.regBank[13];
+    wire [31:0]   up           = uut.REGFILE.regBank[14];
+    wire [31:0]   down          = uut.REGFILE.regBank[15];
+    wire [31:0]   draw           = uut.REGFILE.regBank[16];
+    wire [31:0]   erase           = uut.REGFILE.regBank[17];
+    wire [31:0]   gameRst          = uut.REGFILE.regBank[18];
+    
     pipeline #(.inputs(7)) uut (
         .clk         (clk),
         .reset       (reset),
@@ -112,7 +121,9 @@ module painterTB ();
         //   bit  = flat & 31  (bit0=LSB of that word)
         // ==================================================
 
-        // --- INIT (addr 0) ---
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// --- INIT (addr 0) ---
         loadInstr(   0, 32'h3C0AFFFF); // lui  r10, 0xFFFF
         loadInstr(   4, 32'h354AFF00); // ori  r10, r10, 0xFF00  -> MMIO base
         loadInstr(   8, 32'h20010040); // addi r1,  r0,  64      X=64
@@ -184,7 +195,7 @@ module painterTB ();
         // skip_up=220
 
         // DOWN
-        loadInstr( 220, 32'h11E00008); // beq r15,r0,skip_down off=8 ->252  (was 256 bug fixed below)
+        loadInstr( 220, 32'h11E00008); // beq r15,r0,skip_down off=8 ->256
         loadInstr( 224, 32'h00000000); // nop
         loadInstr( 228, 32'h00000000); // nop
         loadInstr( 232, 32'h00000000); // nop
@@ -195,73 +206,87 @@ module painterTB ();
         loadInstr( 252, 32'h2042FFFF); // addi r2,r2,-1
         // skip_down=256
 
-        // Compute framebuffer address
-        loadInstr( 256, 32'h000219C0); // sll  r3,r2,7          r3 = Y<<7
+        // Compute framebuffer address (REWRITTEN FOR VARIABLE SHIFTS)
+        loadInstr( 256, 32'h20140007); // addi r20,r0,7        r20 = 7 (shift amount)
         loadInstr( 260, 32'h00000000); // nop
         loadInstr( 264, 32'h00000000); // nop
         loadInstr( 268, 32'h00000000); // nop
-        loadInstr( 272, 32'h00611820); // add  r3,r3,r1         r3 = flat
+        loadInstr( 272, 32'h02821804); // sllv r3,r2,r20       r3 = Y<<7
         loadInstr( 276, 32'h00000000); // nop
         loadInstr( 280, 32'h00000000); // nop
         loadInstr( 284, 32'h00000000); // nop
-        loadInstr( 288, 32'h00032142); // srl  r4,r3,5          r4 = word_idx
+        loadInstr( 288, 32'h00611820); // add  r3,r3,r1        r3 = flat index
         loadInstr( 292, 32'h00000000); // nop
         loadInstr( 296, 32'h00000000); // nop
         loadInstr( 300, 32'h00000000); // nop
-        loadInstr( 304, 32'h3065001F); // andi r5,r3,31         r5 = bit_idx
+        loadInstr( 304, 32'h20140005); // addi r20,r0,5        r20 = 5 (shift amount)
         loadInstr( 308, 32'h00000000); // nop
         loadInstr( 312, 32'h00000000); // nop
         loadInstr( 316, 32'h00000000); // nop
-        loadInstr( 320, 32'h00043080); // sll  r6,r4,2          r6 = word_idx*4
+        loadInstr( 320, 32'h02832006); // srlv r4,r3,r20       r4 = word_idx
         loadInstr( 324, 32'h00000000); // nop
         loadInstr( 328, 32'h00000000); // nop
         loadInstr( 332, 32'h00000000); // nop
-        loadInstr( 336, 32'h00D33020); // add  r6,r6,r19        r6 = FB word addr
+        loadInstr( 336, 32'h3065001F); // andi r5,r3,31        r5 = bit_idx
         loadInstr( 340, 32'h00000000); // nop
         loadInstr( 344, 32'h00000000); // nop
         loadInstr( 348, 32'h00000000); // nop
-        loadInstr( 352, 32'h8CC70000); // lw   r7,0(r6)         r7 = current word
+        loadInstr( 352, 32'h20140002); // addi r20,r0,2        r20 = 2 (shift amount)
         loadInstr( 356, 32'h00000000); // nop
         loadInstr( 360, 32'h00000000); // nop
         loadInstr( 364, 32'h00000000); // nop
-        loadInstr( 368, 32'h20080001); // addi r8,r0,1          r8 = 1
+        loadInstr( 368, 32'h02843004); // sllv r6,r4,r20       r6 = word_idx*4
         loadInstr( 372, 32'h00000000); // nop
         loadInstr( 376, 32'h00000000); // nop
         loadInstr( 380, 32'h00000000); // nop
-        loadInstr( 384, 32'h00A84004); // sllv r8,r8,r5         r8 = 1<<bit_idx
+        loadInstr( 384, 32'h00D33020); // add  r6,r6,r19       r6 = FB word addr
         loadInstr( 388, 32'h00000000); // nop
         loadInstr( 392, 32'h00000000); // nop
         loadInstr( 396, 32'h00000000); // nop
-
-        // DRAW
-        loadInstr( 400, 32'h12000008); // beq r16,r0,skip_draw off=8 ->436
+        loadInstr( 400, 32'h8CC70000); // lw   r7,0(r6)        r7 = current word
         loadInstr( 404, 32'h00000000); // nop
         loadInstr( 408, 32'h00000000); // nop
         loadInstr( 412, 32'h00000000); // nop
-        loadInstr( 416, 32'h00E84825); // or   r9,r7,r8
+        loadInstr( 416, 32'h20080001); // addi r8,r0,1         r8 = 1
         loadInstr( 420, 32'h00000000); // nop
         loadInstr( 424, 32'h00000000); // nop
         loadInstr( 428, 32'h00000000); // nop
-        loadInstr( 432, 32'hACC90000); // sw   r9,0(r6)
-        // skip_draw=436
-
-        // ERASE
-        loadInstr( 436, 32'h1220000C); // beq r17,r0,skip_erase off=12 ->488
+        loadInstr( 432, 32'h00A84004); // sllv r8,r8,r5        r8 = 1<<bit_idx
+        loadInstr( 436, 32'h00000000); // nop
         loadInstr( 440, 32'h00000000); // nop
         loadInstr( 444, 32'h00000000); // nop
-        loadInstr( 448, 32'h00000000); // nop
-        loadInstr( 452, 32'h01004027); // nor  r8,r8,r0         r8 = ~r8
+
+        // DRAW
+        loadInstr( 448, 32'h12000008); // beq r16,r0,skip_draw off=8 ->484
+        loadInstr( 452, 32'h00000000); // nop
         loadInstr( 456, 32'h00000000); // nop
         loadInstr( 460, 32'h00000000); // nop
-        loadInstr( 464, 32'h00000000); // nop
-        loadInstr( 468, 32'h00E84824); // and  r9,r7,r8
+        loadInstr( 464, 32'h00E84825); // or   r9,r7,r8
+        loadInstr( 468, 32'h00000000); // nop
         loadInstr( 472, 32'h00000000); // nop
         loadInstr( 476, 32'h00000000); // nop
-        loadInstr( 480, 32'h00000000); // nop
-        loadInstr( 484, 32'hACC90000); // sw   r9,0(r6)
-        // skip_erase=488
+        loadInstr( 480, 32'hACC90000); // sw   r9,0(r6)
+        // skip_draw=484
 
-        loadInstr( 488, 32'h08000005); // j LOOP ->20
+        // ERASE
+        loadInstr( 484, 32'h1220000C); // beq r17,r0,skip_erase off=12 ->536
+        loadInstr( 488, 32'h00000000); // nop
+        loadInstr( 492, 32'h00000000); // nop
+        loadInstr( 496, 32'h00000000); // nop
+        loadInstr( 500, 32'h01004027); // nor  r8,r8,r0         r8 = ~r8
+        loadInstr( 504, 32'h00000000); // nop
+        loadInstr( 508, 32'h00000000); // nop
+        loadInstr( 512, 32'h00000000); // nop
+        loadInstr( 516, 32'h00E84824); // and  r9,r7,r8
+        loadInstr( 520, 32'h00000000); // nop
+        loadInstr( 524, 32'h00000000); // nop
+        loadInstr( 528, 32'h00000000); // nop
+        loadInstr( 532, 32'hACC90000); // sw   r9,0(r6)
+        // skip_erase=536
+
+        loadInstr( 536, 32'h08000005); // j LOOP ->20
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // --------------------------------------------------
         // Deassert hardware reset
