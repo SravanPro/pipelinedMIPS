@@ -1,6 +1,6 @@
 
 *** Running vivado
-    with args -log pipeline.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source pipeline.tcl
+    with args -log newParentWithWires.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source newParentWithWires.tcl
 
 
 
@@ -8,59 +8,120 @@
   **** SW Build 6140274 on Thu May 22 00:12:29 MDT 2025
   **** IP Build 6138677 on Thu May 22 03:10:11 MDT 2025
   **** SharedData Build 6139179 on Tue May 20 17:58:58 MDT 2025
-  **** Start of session at: Mon Mar 16 13:46:00 2026
+  **** Start of session at: Tue Apr 21 12:45:02 2026
     ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
     ** Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 
-source pipeline.tcl -notrace
-create_project: Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 482.910 ; gain = 211.676
-Command: synth_design -top pipeline -part xc7z020clg400-1
+source newParentWithWires.tcl -notrace
+create_project: Time (s): cpu = 00:00:15 ; elapsed = 00:00:19 . Memory (MB): peak = 483.289 ; gain = 208.715
+Command: read_checkpoint -auto_incremental -incremental C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/utils_1/imports/synth_1/pipeline.dcp
+INFO: [Vivado 12-5825] Read reference checkpoint from C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/utils_1/imports/synth_1/pipeline.dcp for incremental synthesis
+INFO: [Vivado 12-7989] Please ensure there are no constraint changes
+Command: synth_design -top newParentWithWires -part xc7z020clg400-1
 Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
+INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 11572
+INFO: [Synth 8-7075] Helper process launched with PID 10864
 ---------------------------------------------------------------------------------
-Starting Synthesize : Time (s): cpu = 00:00:07 ; elapsed = 00:00:09 . Memory (MB): peak = 990.398 ; gain = 502.004
+Starting Synthesize : Time (s): cpu = 00:00:08 ; elapsed = 00:00:11 . Memory (MB): peak = 992.496 ; gain = 493.949
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-6157] synthesizing module 'pipeline' [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/new/pipeline.v:3]
-INFO: [Synth 8-6157] synthesizing module 'pc' [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/imports/new/pc.v:3]
-INFO: [Synth 8-6155] done synthesizing module 'pc' (0#1) [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/imports/new/pc.v:3]
-INFO: [Synth 8-6157] synthesizing module 'adder' [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/new/adder.v:3]
-INFO: [Synth 8-6155] done synthesizing module 'adder' (0#1) [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/new/adder.v:3]
-INFO: [Synth 8-6157] synthesizing module 'instructionMem' [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/imports/new/instructionMem.v:4]
-INFO: [Synth 8-6155] done synthesizing module 'instructionMem' (0#1) [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/imports/new/instructionMem.v:4]
-INFO: [Synth 8-6157] synthesizing module 'if_id' [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/new/if_id.v:3]
-INFO: [Synth 8-6155] done synthesizing module 'if_id' (0#1) [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/new/if_id.v:3]
-INFO: [Synth 8-6157] synthesizing module 'mainControl' [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/imports/new/mainControl.v:10]
-INFO: [Synth 8-6155] done synthesizing module 'mainControl' (0#1) [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/imports/new/mainControl.v:10]
-INFO: [Synth 8-6157] synthesizing module 'signExtend' [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/imports/new/signExtend.v:3]
-INFO: [Synth 8-6155] done synthesizing module 'signExtend' (0#1) [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/imports/new/signExtend.v:3]
-INFO: [Synth 8-6157] synthesizing module 'regFile' [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/imports/new/regFile.v:4]
-INFO: [Synth 8-6155] done synthesizing module 'regFile' (0#1) [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/imports/new/regFile.v:4]
-INFO: [Synth 8-6157] synthesizing module 'id_ex' [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/new/id_ex.v:8]
-INFO: [Synth 8-6155] done synthesizing module 'id_ex' (0#1) [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/new/id_ex.v:8]
-INFO: [Synth 8-6157] synthesizing module 'mux2' [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/new/mux2.v:4]
-	Parameter width bound to: 5 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'mux2' (0#1) [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/new/mux2.v:4]
-INFO: [Synth 8-6157] synthesizing module 'mux2__parameterized0' [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/new/mux2.v:4]
+INFO: [Synth 8-6157] synthesizing module 'newParentWithWires' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/newParentWithWires.v:15]
+WARNING: [Synth 8-4446] all outputs are unconnected for this instance and logic may be removed [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/newParentWithWires.v:577]
+INFO: [Synth 8-6157] synthesizing module 'pipeline' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/pipeline.v:10]
+INFO: [Synth 8-6157] synthesizing module 'pc' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/imports/new/pc.v:3]
+INFO: [Synth 8-6155] done synthesizing module 'pc' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/imports/new/pc.v:3]
+INFO: [Synth 8-6157] synthesizing module 'adder' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/adder.v:3]
+INFO: [Synth 8-6155] done synthesizing module 'adder' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/adder.v:3]
+INFO: [Synth 8-6157] synthesizing module 'instructionMem' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/imports/new/instructionMem.v:4]
+INFO: [Synth 8-6085] Hierarchical reference on 'mem' stops possible memory inference [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/imports/new/instructionMem.v:11]
+INFO: [Synth 8-6155] done synthesizing module 'instructionMem' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/imports/new/instructionMem.v:4]
+INFO: [Synth 8-6157] synthesizing module 'if_id' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/if_id.v:3]
+INFO: [Synth 8-6155] done synthesizing module 'if_id' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/if_id.v:3]
+INFO: [Synth 8-6157] synthesizing module 'jTypeAddressProcessor' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/jTypeAddressProcessor.v:3]
+INFO: [Synth 8-6155] done synthesizing module 'jTypeAddressProcessor' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/jTypeAddressProcessor.v:3]
+INFO: [Synth 8-6157] synthesizing module 'mux2' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/mux2.v:4]
 	Parameter width bound to: 32 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'mux2__parameterized0' (0#1) [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/new/mux2.v:4]
-INFO: [Synth 8-6157] synthesizing module 'aluControl' [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/imports/new/aluControl.v:24]
-INFO: [Synth 8-6155] done synthesizing module 'aluControl' (0#1) [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/imports/new/aluControl.v:24]
-INFO: [Synth 8-6157] synthesizing module 'alu' [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/imports/new/alu6.v:4]
-INFO: [Synth 8-6155] done synthesizing module 'alu' (0#1) [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/imports/new/alu6.v:4]
-INFO: [Synth 8-6157] synthesizing module 'shiftLeft2' [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/imports/new/shiftLeft2.v:3]
-INFO: [Synth 8-6155] done synthesizing module 'shiftLeft2' (0#1) [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/imports/new/shiftLeft2.v:3]
-INFO: [Synth 8-6157] synthesizing module 'ex_mem' [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/new/ex_mem.v:8]
-INFO: [Synth 8-6155] done synthesizing module 'ex_mem' (0#1) [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/new/ex_mem.v:8]
-INFO: [Synth 8-6157] synthesizing module 'memory' [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/imports/new/memory.v:4]
-INFO: [Synth 8-6155] done synthesizing module 'memory' (0#1) [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/imports/new/memory.v:4]
-INFO: [Synth 8-6157] synthesizing module 'mem_wb' [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/new/mem_wb.v:7]
-INFO: [Synth 8-6155] done synthesizing module 'mem_wb' (0#1) [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/new/mem_wb.v:7]
-INFO: [Synth 8-6155] done synthesizing module 'pipeline' (0#1) [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/new/pipeline.v:3]
-WARNING: [Synth 8-3848] Net mem in module/entity instructionMem does not have driver. [C:/Vivado/CompArch/pipelined/pipelined.srcs/sources_1/imports/new/instructionMem.v:11]
+INFO: [Synth 8-6155] done synthesizing module 'mux2' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/mux2.v:4]
+INFO: [Synth 8-6157] synthesizing module 'mainControl' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/imports/new/mainControl.v:3]
+INFO: [Synth 8-6155] done synthesizing module 'mainControl' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/imports/new/mainControl.v:3]
+INFO: [Synth 8-6157] synthesizing module 'jrControl' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/jrControl.v:3]
+INFO: [Synth 8-6155] done synthesizing module 'jrControl' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/jrControl.v:3]
+INFO: [Synth 8-6157] synthesizing module 'hazardDetectionUnit' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/hazardDetectionUnit.v:3]
+INFO: [Synth 8-6155] done synthesizing module 'hazardDetectionUnit' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/hazardDetectionUnit.v:3]
+INFO: [Synth 8-6157] synthesizing module 'signExtend' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/imports/new/signExtend.v:3]
+INFO: [Synth 8-6155] done synthesizing module 'signExtend' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/imports/new/signExtend.v:3]
+INFO: [Synth 8-6157] synthesizing module 'zeroExtend' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/zeroExtend.v:3]
+INFO: [Synth 8-6155] done synthesizing module 'zeroExtend' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/zeroExtend.v:3]
+INFO: [Synth 8-6157] synthesizing module 'sext_or_zext_control' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/sext_or_zext_control.v:3]
+INFO: [Synth 8-6155] done synthesizing module 'sext_or_zext_control' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/sext_or_zext_control.v:3]
+INFO: [Synth 8-6157] synthesizing module 'regFile' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/imports/new/regFile.v:4]
+INFO: [Synth 8-6155] done synthesizing module 'regFile' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/imports/new/regFile.v:4]
+INFO: [Synth 8-6157] synthesizing module 'id_ex' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/id_ex.v:8]
+INFO: [Synth 8-6155] done synthesizing module 'id_ex' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/id_ex.v:8]
+INFO: [Synth 8-6157] synthesizing module 'forwardingUnit' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/forwardingUnit.v:3]
+INFO: [Synth 8-6155] done synthesizing module 'forwardingUnit' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/forwardingUnit.v:3]
+INFO: [Synth 8-6157] synthesizing module 'mux4' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/mux4.v:3]
+	Parameter width bound to: 32 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'mux4' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/mux4.v:3]
+INFO: [Synth 8-6157] synthesizing module 'mux2__parameterized0' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/mux2.v:4]
+	Parameter width bound to: 5 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'mux2__parameterized0' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/mux2.v:4]
+INFO: [Synth 8-6157] synthesizing module 'aluControl' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/imports/new/aluControl.v:4]
+INFO: [Synth 8-6155] done synthesizing module 'aluControl' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/imports/new/aluControl.v:4]
+INFO: [Synth 8-6157] synthesizing module 'alu' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/imports/new/alu6.v:4]
+INFO: [Synth 8-6155] done synthesizing module 'alu' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/imports/new/alu6.v:4]
+INFO: [Synth 8-6157] synthesizing module 'shiftLeft2' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/imports/new/shiftLeft2.v:3]
+INFO: [Synth 8-6155] done synthesizing module 'shiftLeft2' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/imports/new/shiftLeft2.v:3]
+INFO: [Synth 8-6157] synthesizing module 'ex_mem' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/ex_mem.v:8]
+INFO: [Synth 8-6155] done synthesizing module 'ex_mem' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/ex_mem.v:8]
+INFO: [Synth 8-6157] synthesizing module 'memory' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/imports/new/memory.v:4]
+INFO: [Synth 8-6155] done synthesizing module 'memory' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/imports/new/memory.v:4]
+INFO: [Synth 8-6157] synthesizing module 'mem_wb' [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/mem_wb.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'mem_wb' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/mem_wb.v:7]
+INFO: [Synth 8-6155] done synthesizing module 'pipeline' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/pipeline.v:10]
+INFO: [Synth 8-6085] Hierarchical reference on 'regBank' stops possible memory inference [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/imports/new/regFile.v:17]
+INFO: [Synth 8-6085] Hierarchical reference on 'mem' stops possible memory inference [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/imports/new/instructionMem.v:11]
+INFO: [Synth 8-6085] Hierarchical reference on 'mem' stops possible memory inference [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/imports/new/memory.v:16]
+INFO: [Synth 8-6155] done synthesizing module 'newParentWithWires' (0#1) [C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.srcs/sources_1/new/newParentWithWires.v:15]
+WARNING: [Synth 8-3917] design newParentWithWires has port o_id_immSelect[1] driven by constant 0
+WARNING: [Synth 8-7129] Port if_id_IR[31] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_IR[30] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_IR[29] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_IR[28] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_IR[27] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_IR[26] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[27] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[26] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[25] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[24] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[23] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[22] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[21] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[20] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[19] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[18] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[17] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[16] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[15] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[14] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[13] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[12] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[11] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[10] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[9] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[8] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[7] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[6] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[5] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[4] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[3] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[2] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[1] in module jTypeAddressProcessor is either unconnected or has no load
+WARNING: [Synth 8-7129] Port if_id_NPC[0] in module jTypeAddressProcessor is either unconnected or has no load
 WARNING: [Synth 8-7129] Port pcVal[31] in module instructionMem is either unconnected or has no load
 WARNING: [Synth 8-7129] Port pcVal[30] in module instructionMem is either unconnected or has no load
 WARNING: [Synth 8-7129] Port pcVal[29] in module instructionMem is either unconnected or has no load
@@ -85,30 +146,22 @@ WARNING: [Synth 8-7129] Port pcVal[11] in module instructionMem is either unconn
 WARNING: [Synth 8-7129] Port pcVal[10] in module instructionMem is either unconnected or has no load
 WARNING: [Synth 8-7129] Port pcVal[9] in module instructionMem is either unconnected or has no load
 WARNING: [Synth 8-7129] Port pcVal[8] in module instructionMem is either unconnected or has no load
-WARNING: [Synth 8-7129] Port pcVal[7] in module instructionMem is either unconnected or has no load
-WARNING: [Synth 8-7129] Port pcVal[6] in module instructionMem is either unconnected or has no load
-WARNING: [Synth 8-7129] Port pcVal[5] in module instructionMem is either unconnected or has no load
-WARNING: [Synth 8-7129] Port pcVal[4] in module instructionMem is either unconnected or has no load
-WARNING: [Synth 8-7129] Port pcVal[3] in module instructionMem is either unconnected or has no load
-WARNING: [Synth 8-7129] Port pcVal[2] in module instructionMem is either unconnected or has no load
-WARNING: [Synth 8-7129] Port pcVal[1] in module instructionMem is either unconnected or has no load
-WARNING: [Synth 8-7129] Port pcVal[0] in module instructionMem is either unconnected or has no load
 ---------------------------------------------------------------------------------
-Finished Synthesize : Time (s): cpu = 00:00:10 ; elapsed = 00:00:13 . Memory (MB): peak = 1164.625 ; gain = 676.230
+Finished Synthesize : Time (s): cpu = 00:00:16 ; elapsed = 00:00:20 . Memory (MB): peak = 1404.820 ; gain = 906.273
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:11 ; elapsed = 00:00:14 . Memory (MB): peak = 1164.625 ; gain = 676.230
+Finished Constraint Validation : Time (s): cpu = 00:00:18 ; elapsed = 00:00:22 . Memory (MB): peak = 1404.820 ; gain = 906.273
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7z020clg400-1
+---------------------------------------------------------------------------------
 INFO: [Device 21-403] Loading part xc7z020clg400-1
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:18 ; elapsed = 00:00:22 . Memory (MB): peak = 1404.820 ; gain = 906.273
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:11 ; elapsed = 00:00:14 . Memory (MB): peak = 1164.625 ; gain = 676.230
 ---------------------------------------------------------------------------------
----------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:17 ; elapsed = 00:00:18 . Memory (MB): peak = 1164.625 ; gain = 676.230
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:45 ; elapsed = 00:00:48 . Memory (MB): peak = 1404.820 ; gain = 906.273
 ---------------------------------------------------------------------------------
 No constraint files found.
 ---------------------------------------------------------------------------------
@@ -121,22 +174,22 @@ Detailed RTL Component Info :
 +---XORs : 
 	   2 Input     32 Bit         XORs := 1     
 +---Registers : 
-	               32 Bit    Registers := 44    
-	                8 Bit    Registers := 128   
+	               32 Bit    Registers := 46    
+	                8 Bit    Registers := 512   
 	                5 Bit    Registers := 5     
 	                4 Bit    Registers := 1     
-	                1 Bit    Registers := 15    
+	                1 Bit    Registers := 20    
 +---Muxes : 
-	   2 Input   32 Bit        Muxes := 10    
-	   4 Input    8 Bit        Muxes := 64    
-	   2 Input    8 Bit        Muxes := 126   
-	   2 Input    5 Bit        Muxes := 4     
-	   2 Input    4 Bit        Muxes := 1     
-	   7 Input    2 Bit        Muxes := 1     
-	   2 Input    1 Bit        Muxes := 158   
-	   7 Input    1 Bit        Muxes := 7     
-	   4 Input    1 Bit        Muxes := 32    
-	   5 Input    1 Bit        Muxes := 90    
+	   2 Input   32 Bit        Muxes := 22    
+	   4 Input   32 Bit        Muxes := 2     
+	   2 Input    8 Bit        Muxes := 509   
+	   4 Input    8 Bit        Muxes := 128   
+	   2 Input    5 Bit        Muxes := 9     
+	   2 Input    4 Bit        Muxes := 2     
+	   2 Input    2 Bit        Muxes := 2     
+	   2 Input    1 Bit        Muxes := 2     
+	  14 Input    1 Bit        Muxes := 9     
+	   5 Input    1 Bit        Muxes := 1     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -154,21 +207,22 @@ No constraint files found.
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+WARNING: [Synth 8-3917] design newParentWithWires has port o_id_immSelect[1] driven by constant 0
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:22 ; elapsed = 00:00:35 . Memory (MB): peak = 1335.879 ; gain = 847.484
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:02:42 ; elapsed = 00:02:58 . Memory (MB): peak = 1937.160 ; gain = 1438.613
 ---------------------------------------------------------------------------------
 No constraint files found.
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:22 ; elapsed = 00:00:35 . Memory (MB): peak = 1351.629 ; gain = 863.234
+Finished Timing Optimization : Time (s): cpu = 00:02:43 ; elapsed = 00:02:59 . Memory (MB): peak = 1937.160 ; gain = 1438.613
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:22 ; elapsed = 00:00:35 . Memory (MB): peak = 1351.629 ; gain = 863.234
+Finished Technology Mapping : Time (s): cpu = 00:02:50 ; elapsed = 00:03:06 . Memory (MB): peak = 1937.160 ; gain = 1438.613
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -185,38 +239,139 @@ Start Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[255]_inferred:in0[7] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[255]_inferred:in0[6] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[255]_inferred:in0[5] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[255]_inferred:in0[4] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[255]_inferred:in0[3] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[255]_inferred:in0[2] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[255]_inferred:in0[1] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[255]_inferred:in0[0] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[254]_inferred:in0[7] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[254]_inferred:in0[6] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[254]_inferred:in0[5] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[254]_inferred:in0[4] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[254]_inferred:in0[3] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[254]_inferred:in0[2] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[254]_inferred:in0[1] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[254]_inferred:in0[0] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[253]_inferred:in0[7] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[253]_inferred:in0[6] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[253]_inferred:in0[5] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[253]_inferred:in0[4] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[253]_inferred:in0[3] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[253]_inferred:in0[2] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[253]_inferred:in0[1] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[253]_inferred:in0[0] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[252]_inferred:in0[7] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[252]_inferred:in0[6] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[252]_inferred:in0[5] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[252]_inferred:in0[4] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[252]_inferred:in0[3] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[252]_inferred:in0[2] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[252]_inferred:in0[1] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[252]_inferred:in0[0] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[251]_inferred:in0[7] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[251]_inferred:in0[6] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[251]_inferred:in0[5] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[251]_inferred:in0[4] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[251]_inferred:in0[3] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[251]_inferred:in0[2] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[251]_inferred:in0[1] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[251]_inferred:in0[0] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[250]_inferred:in0[7] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[250]_inferred:in0[6] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[250]_inferred:in0[5] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[250]_inferred:in0[4] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[250]_inferred:in0[3] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[250]_inferred:in0[2] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[250]_inferred:in0[1] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[250]_inferred:in0[0] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[249]_inferred:in0[7] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[249]_inferred:in0[6] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[249]_inferred:in0[5] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[249]_inferred:in0[4] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[249]_inferred:in0[3] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[249]_inferred:in0[2] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[249]_inferred:in0[1] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[249]_inferred:in0[0] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[248]_inferred:in0[7] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[248]_inferred:in0[6] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[248]_inferred:in0[5] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[248]_inferred:in0[4] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[248]_inferred:in0[3] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[248]_inferred:in0[2] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[248]_inferred:in0[1] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[248]_inferred:in0[0] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[247]_inferred:in0[7] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[247]_inferred:in0[6] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[247]_inferred:in0[5] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[247]_inferred:in0[4] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[247]_inferred:in0[3] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[247]_inferred:in0[2] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[247]_inferred:in0[1] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[247]_inferred:in0[0] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[246]_inferred:in0[7] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[246]_inferred:in0[6] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[246]_inferred:in0[5] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[246]_inferred:in0[4] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[246]_inferred:in0[3] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[246]_inferred:in0[2] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[246]_inferred:in0[1] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[246]_inferred:in0[0] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[245]_inferred:in0[7] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[245]_inferred:in0[6] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[245]_inferred:in0[5] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[245]_inferred:in0[4] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[245]_inferred:in0[3] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[245]_inferred:in0[2] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[245]_inferred:in0[1] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[245]_inferred:in0[0] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[244]_inferred:in0[7] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[244]_inferred:in0[6] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[244]_inferred:in0[5] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[244]_inferred:in0[4] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[244]_inferred:in0[3] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[244]_inferred:in0[2] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[244]_inferred:in0[1] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[244]_inferred:in0[0] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[243]_inferred:in0[7] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[243]_inferred:in0[6] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[243]_inferred:in0[5] to constant 0
+WARNING: [Synth 8-3295] tying undriven pin PIPELINE_INST/IMEM/mem[243]_inferred:in0[4] to constant 0
+INFO: [Common 17-14] Message 'Synth 8-3295' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:28 ; elapsed = 00:00:41 . Memory (MB): peak = 1555.348 ; gain = 1066.953
+Finished IO Insertion : Time (s): cpu = 00:02:58 ; elapsed = 00:03:15 . Memory (MB): peak = 1937.160 ; gain = 1438.613
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:28 ; elapsed = 00:00:41 . Memory (MB): peak = 1555.348 ; gain = 1066.953
+Finished Renaming Generated Instances : Time (s): cpu = 00:02:58 ; elapsed = 00:03:15 . Memory (MB): peak = 1937.160 ; gain = 1438.613
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:28 ; elapsed = 00:00:41 . Memory (MB): peak = 1555.348 ; gain = 1066.953
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:02:59 ; elapsed = 00:03:16 . Memory (MB): peak = 1937.160 ; gain = 1438.613
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:28 ; elapsed = 00:00:41 . Memory (MB): peak = 1555.348 ; gain = 1066.953
+Finished Renaming Generated Ports : Time (s): cpu = 00:03:00 ; elapsed = 00:03:17 . Memory (MB): peak = 1937.160 ; gain = 1438.613
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:28 ; elapsed = 00:00:41 . Memory (MB): peak = 1555.348 ; gain = 1066.953
+Finished Handling Custom Attributes : Time (s): cpu = 00:03:01 ; elapsed = 00:03:18 . Memory (MB): peak = 1937.160 ; gain = 1438.613
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:28 ; elapsed = 00:00:41 . Memory (MB): peak = 1555.348 ; gain = 1066.953
+Finished Renaming Generated Nets : Time (s): cpu = 00:03:01 ; elapsed = 00:03:18 . Memory (MB): peak = 1937.160 ; gain = 1438.613
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -229,36 +384,68 @@ Report BlackBoxes:
 +-+--------------+----------+
 
 Report Cell Usage: 
-+-+-----+------+
-| |Cell |Count |
-+-+-----+------+
-+-+-----+------+
++------+-------+------+
+|      |Cell   |Count |
++------+-------+------+
+|1     |BUFG   |     1|
+|2     |CARRY4 |    55|
+|3     |LUT1   |  2103|
+|4     |LUT2   |   300|
+|5     |LUT3   |  1392|
+|6     |LUT4   |   723|
+|7     |LUT5   |  1169|
+|8     |LUT6   | 12227|
+|9     |MUXF7  |  3525|
+|10    |MUXF8  |  1601|
+|11    |FDCE   |  5168|
+|12    |FDPE   |   449|
+|13    |IBUF   |     2|
+|14    |OBUF   |  6141|
+|15    |OBUFT  |  2048|
++------+-------+------+
 
 Report Instance Areas: 
-+------+---------+-------+------+
-|      |Instance |Module |Cells |
-+------+---------+-------+------+
-|1     |top      |       |     0|
-+------+---------+-------+------+
++------+-----------------+---------------+------+
+|      |Instance         |Module         |Cells |
++------+-----------------+---------------+------+
+|1     |top              |               | 36904|
+|2     |  PIPELINE_INST  |pipeline       | 28705|
+|3     |    BRANCH_ADDER |adder          |    36|
+|4     |    ALU          |alu            |   230|
+|5     |    DMEM         |memory         | 18102|
+|6     |    EX_MEM       |ex_mem         |   276|
+|7     |    ID_EX        |id_ex          |   324|
+|8     |    IF_ID        |if_id          |   133|
+|9     |    IMEM         |instructionMem |  5856|
+|10    |    IMM_MUX      |mux2           |    32|
+|11    |    MEMTOREG_MUX |mux2_0         |    32|
+|12    |    MEM_WB       |mem_wb         |  1160|
+|13    |    PC           |pc             |    33|
+|14    |    PC_ADDER     |adder_1        |     2|
+|15    |    REGFILE      |regFile        |  1934|
++------+-----------------+---------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:28 ; elapsed = 00:00:41 . Memory (MB): peak = 1555.348 ; gain = 1066.953
+Finished Writing Synthesis Report : Time (s): cpu = 00:03:01 ; elapsed = 00:03:18 . Memory (MB): peak = 1937.160 ; gain = 1438.613
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 34 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:28 ; elapsed = 00:00:42 . Memory (MB): peak = 1555.348 ; gain = 1066.953
-Synthesis Optimization Complete : Time (s): cpu = 00:00:28 ; elapsed = 00:00:42 . Memory (MB): peak = 1555.348 ; gain = 1066.953
+Synthesis finished with 0 errors, 0 critical warnings and 2110 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:03:01 ; elapsed = 00:03:18 . Memory (MB): peak = 1937.160 ; gain = 1438.613
+Synthesis Optimization Complete : Time (s): cpu = 00:03:01 ; elapsed = 00:03:18 . Memory (MB): peak = 1937.160 ; gain = 1438.613
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1555.352 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.383 . Memory (MB): peak = 1937.160 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 5181 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1683.066 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.016 . Memory (MB): peak = 1937.160 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Synth Design complete | Checksum: 26fe45e5
+Synth Design complete | Checksum: 8073ed61
 INFO: [Common 17-83] Releasing license: Synthesis
-44 Infos, 34 Warnings, 0 Critical Warnings and 0 Errors encountered.
+71 Infos, 162 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:30 ; elapsed = 00:00:46 . Memory (MB): peak = 1683.066 ; gain = 1200.156
-INFO: [Common 17-1381] The checkpoint 'C:/Vivado/CompArch/pipelined/pipelined.runs/synth_1/pipeline.dcp' has been generated.
-INFO: [Vivado 12-24828] Executing command : report_utilization -file pipeline_utilization_synth.rpt -pb pipeline_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Mon Mar 16 13:47:15 2026...
+synth_design: Time (s): cpu = 00:03:10 ; elapsed = 00:03:30 . Memory (MB): peak = 1937.160 ; gain = 1444.719
+Write ShapeDB Complete: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.193 . Memory (MB): peak = 1937.160 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.runs/synth_1/newParentWithWires.dcp' has been generated.
+INFO: [Vivado 12-24828] Executing command : report_utilization -file newParentWithWires_utilization_synth.rpt -pb newParentWithWires_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Tue Apr 21 12:49:14 2026...
