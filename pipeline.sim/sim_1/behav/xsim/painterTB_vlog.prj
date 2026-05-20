@@ -23,7 +23,16 @@ verilog xil_defaultlib  --include "../../../../../../../../Xilinx/2025.1/Vivado/
 "../../../../pipeline.srcs/sources_1/imports/new/shiftLeft2.v" \
 "../../../../pipeline.srcs/sources_1/imports/new/signExtend.v" \
 "../../../../pipeline.srcs/sources_1/new/zeroExtend.v" \
+"../../../../pipeline.srcs/sources_1/new/newParentWithWires.v" \
+"../../../../pipeline.srcs/sources_1/new/movementDivider.v" \
+"../../../../pipeline.srcs/sources_1/new/parent.v" \
+"../../../../pipeline.srcs/sources_1/new/analogTranslator.v" \
+"../../../../pipeline.srcs/sources_1/new/crosshair.v" \
 "../../../../pipeline.srcs/sim_1/new/painterTB.v" \
+"../../../../pipeline.srcs/sim_1/new/pipelineTB.v" \
+"../../../../pipeline.srcs/sim_1/new/pipelineTB1.v" \
+"../../../../pipeline.srcs/sim_1/new/pipelineTB2.v" \
+"../../../../pipeline.srcs/sim_1/new/pipelineTB_copyingArray.v" \
 
 # compile glbl module
 verilog xil_defaultlib "glbl.v"
