@@ -1,25 +1,12 @@
 `timescale 1ns / 1ps
 
-/*
-  MMIO input map (address 0xFFFFFF00 + index):
-    [0] = right
-    [1] = left
-    [2] = up
-    [3] = down
-    [4] = draw
-    [5] = erase
-    [6] = game_reset
-
-  framebuffer[Y*128 + X] = 1 if pixel (X,Y) is ON
-    X: 0=left, 127=right
-    Y: 0=bottom, 63=top
-*/
-
 module pipeline #(parameter inputs = 256)(
     input  wire              clk,
     input  wire              reset,
     input  wire [inputs-1:0] memMappedIO,
-    output wire [8191:0]     framebuffer
+    output wire [8191:0]     framebuffer,
+    output wire [31:0]      r1,
+    output wire [31:0]      r2
 );
 
     wire [31:0] pc_out, pc_plus4, pc_next, if_instruction;
@@ -110,7 +97,7 @@ module pipeline #(parameter inputs = 256)(
     regFile REGFILE (
         .clock(clk), .reset(reset), .regWrite(wb_regWrite),
         .rn1(id_RS), .rn2(id_RT), .wn(wb_regDest), .wd(wb_writeData_final),
-        .rd1(id_rd1), .rd2(id_rd2)
+        .rd1(id_rd1), .rd2(id_rd2), .r1(r1), .r2(r2)
     );
 
     id_ex ID_EX (

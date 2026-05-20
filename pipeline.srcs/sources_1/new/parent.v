@@ -1,0 +1,58 @@
+`timescale 1ns / 1ps
+
+module parent#(parameter inputs = 256)(
+    input clk,  
+    input reset,  
+    input white, black, brown, red, gameRst, erase, draw,
+    output wire [8191:0] framebufferNet
+);
+
+    // stage 1: analog translator
+    wire rightRaw, leftRaw, upRaw, downRaw;
+    analogTranslator ANALOG_TRANSLATOR (
+        .white(white),
+        .black(black),
+        .brown(brown),
+        .red(red),
+        .right(rightRaw),
+        .left(leftRaw),
+        .up(upRaw),
+        .down(downRaw)
+    );
+
+     // stage 2: movement divider
+    movementDivider MOVEMENT_DIVIDER (
+        .clock(clk),
+        .reset(reset),
+        .rightRaw(rightRaw),
+        .leftRaw(leftRaw),
+        .upRaw(upRaw),
+        .downRaw(downRaw),
+        .right(right),
+        .left(left),
+        .up(up),
+        .down(down)
+    );
+
+    wire [31:0] r1;
+    wire [31:0] r2;
+    wire [inputs-1:0] memMappedIO = {249'b0, gameRst, erase, draw, down, up, left, right};
+
+    pipeline #(.inputs(inputs)) PIPELINE (
+        .clk         (clk),
+        .reset       (reset),
+        .memMappedIO (memMappedIO),
+        .framebuffer (framebuffer),
+        .r1(r1), .r2(r2)
+    );
+
+    wire [8191:0] crosshairFB;
+    crosshair CROSSHAIR (
+        .X(r1),
+        .Y(r2),
+        .crosshairFB(crosshairFB) 
+    );
+
+    assign framebufferNet = framebuffer | crosshairFB;
+
+endmodule

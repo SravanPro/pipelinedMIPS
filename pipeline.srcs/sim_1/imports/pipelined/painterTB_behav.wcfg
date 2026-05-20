@@ -11,19 +11,19 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="565.705000 us"></ZoomStartTime>
-      <ZoomEndTime time="596.825001 us"></ZoomEndTime>
-      <Cursor1Time time="585.035000 us"></Cursor1Time>
+      <ZoomStartTime time="0.000000 us"></ZoomStartTime>
+      <ZoomEndTime time="1,099.604678 us"></ZoomEndTime>
+      <Cursor1Time time="104.441216 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="178"></NameColumnWidth>
-      <ValueColumnWidth column_width="73"></ValueColumnWidth>
+      <NameColumnWidth column_width="169"></NameColumnWidth>
+      <ValueColumnWidth column_width="72"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="23" />
    <wvobject fp_name="/painterTB/btn_right" type="logic">
       <obj_property name="ElementShortName">btn_right</obj_property>
       <obj_property name="ObjectShortName">btn_right</obj_property>
-      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+      <obj_property name="CustomSignalColor">#FFD700</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
    <wvobject fp_name="/painterTB/btn_left" type="logic">
@@ -76,45 +76,45 @@
       <obj_property name="CustomSignalColor">#00FF00</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
-   <wvobject fp_name="/painterTB/right" type="array">
-      <obj_property name="ElementShortName">right[31:0]</obj_property>
-      <obj_property name="ObjectShortName">right[31:0]</obj_property>
-      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+   <wvobject fp_name="/painterTB/uut/REGFILE/regBank[12]" type="array">
+      <obj_property name="ElementShortName">[12][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[12][31:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FFD700</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
-   <wvobject fp_name="/painterTB/left" type="array">
-      <obj_property name="ElementShortName">left[31:0]</obj_property>
-      <obj_property name="ObjectShortName">left[31:0]</obj_property>
+   <wvobject fp_name="/painterTB/uut/REGFILE/regBank[13]" type="array">
+      <obj_property name="ElementShortName">[13][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[13][31:0]</obj_property>
       <obj_property name="CustomSignalColor">#E0FFFF</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
-   <wvobject fp_name="/painterTB/up" type="array">
-      <obj_property name="ElementShortName">up[31:0]</obj_property>
-      <obj_property name="ObjectShortName">up[31:0]</obj_property>
+   <wvobject fp_name="/painterTB/uut/REGFILE/regBank[14]" type="array">
+      <obj_property name="ElementShortName">[14][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[14][31:0]</obj_property>
       <obj_property name="CustomSignalColor">#FF00FF</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
-   <wvobject fp_name="/painterTB/down" type="array">
-      <obj_property name="ElementShortName">down[31:0]</obj_property>
-      <obj_property name="ObjectShortName">down[31:0]</obj_property>
+   <wvobject fp_name="/painterTB/uut/REGFILE/regBank[15]" type="array">
+      <obj_property name="ElementShortName">[15][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[15][31:0]</obj_property>
       <obj_property name="CustomSignalColor">#0000FF</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
-   <wvobject fp_name="/painterTB/draw" type="array">
-      <obj_property name="ElementShortName">draw[31:0]</obj_property>
-      <obj_property name="ObjectShortName">draw[31:0]</obj_property>
+   <wvobject fp_name="/painterTB/uut/REGFILE/regBank[16]" type="array">
+      <obj_property name="ElementShortName">[16][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[16][31:0]</obj_property>
       <obj_property name="CustomSignalColor">#FF0000</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
-   <wvobject fp_name="/painterTB/erase" type="array">
-      <obj_property name="ElementShortName">erase[31:0]</obj_property>
-      <obj_property name="ObjectShortName">erase[31:0]</obj_property>
+   <wvobject fp_name="/painterTB/uut/REGFILE/regBank[17]" type="array">
+      <obj_property name="ElementShortName">[17][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[17][31:0]</obj_property>
       <obj_property name="CustomSignalColor">#FAAFBE</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
-   <wvobject fp_name="/painterTB/gameRst" type="array">
-      <obj_property name="ElementShortName">gameRst[31:0]</obj_property>
-      <obj_property name="ObjectShortName">gameRst[31:0]</obj_property>
+   <wvobject fp_name="/painterTB/uut/REGFILE/regBank[18]" type="array">
+      <obj_property name="ElementShortName">[18][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[18][31:0]</obj_property>
       <obj_property name="CustomSignalColor">#00FFFF</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>

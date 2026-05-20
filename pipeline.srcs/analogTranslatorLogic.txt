@@ -10,7 +10,7 @@ wires:
         00          10
         11          01
         
-    orange: gameTst
+    orange: gameRst
     green: erase
     yellow: draw
 

@@ -11,14 +11,21 @@ module regFile(
     input [31:0] wd,
     
     output [31:0] rd1,
-    output [31:0] rd2 
+    output [31:0] rd2,
+    
+    output [31:0] r1,
+    output [31:0] r2
 );
 
      reg [31:0] regBank [31:0];
      reg [7:0] i;
+     
         
     assign rd1 = (regWrite && wn != 5'd0 && wn == rn1) ? wd : regBank[rn1];
     assign rd2 = (regWrite && wn != 5'd0 && wn == rn2) ? wd : regBank[rn2];
+    
+    assign r1 = regBank[1];
+    assign r2 = regBank[2];
      
      always @(posedge clock or posedge reset) begin
      

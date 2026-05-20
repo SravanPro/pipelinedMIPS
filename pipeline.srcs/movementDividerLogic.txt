@@ -1,0 +1,35 @@
+b0: reset
+
+side note (qol feature):
+    right, left, up, down latching regsiters: FROM THE REGFILE
+    12,    13,   14, 15: their MSB should be combinationally driving an output, 
+   
+pointer:
+    based on the x and y values (directly tapped from the register bank from r1 and r2)
+    we will render another combinational framebuffer, each pixel is basically a function of x and y
+    pointer:    
+        1 solid pixel at the exact coordinates of x and y
+        1 square layer of blank space around it, 1 pixel thick
+        1 square layer of solid pixels around the blank space, 1 pixel thick
+        so basically it should look like a square crosshair, with 3 layers.
+        and this 128*64 crosshair framebuffer should be flattened exactly like my pixel framebuffer.
+
+        but at the end, we want our net framebuffer to contain both the pixel framebuffer and the crosshair 
+        framebuffer, right?
+
+        so im going to OR those 2 framebuffers, pixel by pixel, and present that as the net framebuffer.
+
+        
+
+
+let scan cycle be x clock cycles 
+so scan time st = x/(50e6) seconds 
+let desired speed v: no of pixels travelled per second. 
+    should be adjustable, togglable with 2 buttons 
+
+    rough avg: 4, range: 1 to 10
+    b3: reduce, b2: increase
+    this count should be tapped to a 4 bit output, which i will assign to fpga's 4 leds later(qol feature)
+
+
+
