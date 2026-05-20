@@ -39,10 +39,19 @@ let unfiltered speed:   vu (basically no of pixels per second when not refined)
 
 we will achieve desired speed by applying PWM on unfiltered speed.
 
+on avg: 75 instr per loop. so 75cc. at 50Mhz, st = 75/50e6 = 1.5 us
+vu = 0.666 million {px/s}
+we want v = 4 {px/s} (approx)
 
+
+so baseline speed reduction factor = vu / v = r = 166666.667= 500,000/3
 
 so to achieve a speed reduction of "r"
-let con = no of "ON" clock cycles every million cycles. 
+let con = no of "ON" clock cycles every 10^6 cycles. 
+con = (10^6) / (500,000/3) = 6
+so basically 3 cc for every 500k cyckes.
+so basically 1cc every 166,666 cycles.
+ 
 
 
 

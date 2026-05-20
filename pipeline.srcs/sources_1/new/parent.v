@@ -4,7 +4,9 @@ module parent#(parameter inputs = 256)(
     input clk,  
     input reset,  
     input white, black, brown, red, gameRst, erase, draw,
-    output wire [8191:0] framebufferNet
+    input speedInc, speedDec,
+    output wire [8191:0] framebufferNet,
+    output [3:0] speedOut
 );
 
     // stage 1: analog translator
@@ -21,6 +23,7 @@ module parent#(parameter inputs = 256)(
     );
 
      // stage 2: movement divider
+    wire right, left, up, down;
     movementDivider MOVEMENT_DIVIDER (
         .clock(clk),
         .reset(reset),
@@ -28,15 +31,19 @@ module parent#(parameter inputs = 256)(
         .leftRaw(leftRaw),
         .upRaw(upRaw),
         .downRaw(downRaw),
+        .speedInc(speedInc),
+        .speedDec(speedDec),
         .right(right),
         .left(left),
         .up(up),
-        .down(down)
+        .down(down),
+        .speedOut(speedOut)
     );
 
     wire [31:0] r1;
     wire [31:0] r2;
     wire [inputs-1:0] memMappedIO = {249'b0, gameRst, erase, draw, down, up, left, right};
+    wire [8191:0] framebuffer;
 
     pipeline #(.inputs(inputs)) PIPELINE (
         .clk         (clk),
