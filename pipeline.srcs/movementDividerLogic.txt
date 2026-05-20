@@ -23,13 +23,26 @@ pointer:
 
 
 let scan cycle be x clock cycles 
-so scan time st = x/(50e6) seconds 
-let desired speed v: no of pixels travelled per second. 
+so scan time st = x/(50e6) {seconds} 
+let desired speed: v {pixels per second}
     should be adjustable, togglable with 2 buttons 
 
     rough avg: 4, range: 1 to 10
     b3: reduce, b2: increase
     this count should be tapped to a 4 bit output, which i will assign to fpga's 4 leds later(qol feature)
+
+let unfiltered speed:   vu (basically no of pixels per second when not refined)
+                        1*st {s} : 1 {px}
+                        1{s} : vu {px/s}  * 1 {s} = vu {px}
+
+                        so vu = 1/st {px/s}
+
+we will achieve desired speed by applying PWM on unfiltered speed.
+
+
+
+so to achieve a speed reduction of "r"
+let con = no of "ON" clock cycles every million cycles. 
 
 
 
