@@ -1,0 +1,18 @@
+wires:
+    (white,black) (left, right)
+        01          00
+        11          10
+        00          01
+
+
+    (brown,red) (up, down)
+        01          00
+        00          10
+        11          01
+        
+    orange: gameTst
+    green: erase
+    yellow: draw
+
+
+

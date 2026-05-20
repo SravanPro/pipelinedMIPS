@@ -45,7 +45,7 @@ module pipeline #(parameter inputs = 256)(
         .pcInVal  (pc_next),  .pcOutVal (pc_out)
     );
     adder PC_ADDER (.a(pc_out), .b(32'd4), .sum(pc_plus4));
-    instructionMem IMEM (.pcVal(pc_out), .instruction(if_instruction));
+    instructionMem IMEM (.pcVal(pc_out), .instruction(if_instruction), .reset(reset));
 
     if_id IF_ID (
         .clk(clk), .reset(reset),
