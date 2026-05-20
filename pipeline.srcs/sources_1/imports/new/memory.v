@@ -23,7 +23,7 @@ module memory #(parameter memorySizeInBytes = 6144, parameter ioWidth = 256)
     input  wire [31:0] writeData,
     input  wire [ioWidth-1:0] memMappedIO,
     output reg  [31:0] readData,
-    output wire [8191:0] framebuffer
+    output reg [8191:0] framebuffer
 );
 
     integer i;
@@ -70,22 +70,15 @@ module memory #(parameter memorySizeInBytes = 6144, parameter ioWidth = 256)
     // Word w covers pixels [w*32 .. w*32+31]
     // framebuffer[flat] = word_w bit (flat%32), word_w = mem[0x200+w*4..+3]
     // Reconstruct each word big-endian (same as lw) then expose bits
-    genvar w;
-    generate
-        for (w = 0; w < 256; w = w + 1) begin : fb_words
-            wire [31:0] fb_word;
-            assign fb_word = {mem[32'h200 + w*4],
-                              mem[32'h200 + w*4 + 1],
-                              mem[32'h200 + w*4 + 2],
-                              mem[32'h200 + w*4 + 3]};
-            // pixel flat = w*32+b, b=0..31
-            // framebuffer bit assignment: fb[w*32+b] = fb_word[b]
-            // but fb_word bit ordering: bit31 = mem[w*4] MSB ... bit0 = mem[w*4+3] LSB
-            // the program does: mask = 1<<bit_idx, word |= mask
-            // so bit_idx 0 = LSB of the word = mem[w*4+3] bit0
-            // framebuffer[w*32 + b] = fb_word[b]  (b=0 is LSB)
-            assign framebuffer[w*32 +: 32] = fb_word;
+// ---- framebuffer output ----
+    integer w;
+    always @(*) begin
+        for (w = 0; w < 256; w = w + 1) begin
+            framebuffer[w*32 +: 32] = {mem[32'h200 + w*4],
+                                       mem[32'h200 + w*4 + 1],
+                                       mem[32'h200 + w*4 + 2],
+                                       mem[32'h200 + w*4 + 3]};
         end
-    endgenerate
+    end
 
 endmodule

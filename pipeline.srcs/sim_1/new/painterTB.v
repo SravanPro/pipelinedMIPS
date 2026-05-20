@@ -27,7 +27,7 @@ module painterTB ();
     assign mmio_in[5] = btn_erase;
     assign mmio_in[6] = btn_game_reset;
 
-    wire [8191:0] framebuffer = uut.framebuffer;
+    wire [8191:0] framebuffer;
     wire memWrite = uut.DMEM.memWrite;
     
     wire [31:0]   r1_X           = uut.REGFILE.regBank[1];
@@ -40,6 +40,20 @@ module painterTB ();
     wire [31:0]   erase           = uut.REGFILE.regBank[17];
     wire [31:0]   gameRst          = uut.REGFILE.regBank[18];
     
+
+integer frame_file;
+integer x, y;
+integer flat;
+reg prev_memWrite;
+
+initial begin
+    prev_memWrite = 0;
+
+    frame_file = $fopen("frames.txt", "w");
+    $fclose(frame_file);
+end
+
+
     pipeline #(.inputs(7)) uut (
         .clk         (clk),
         .reset       (reset),
@@ -61,7 +75,49 @@ module painterTB ();
         end
     endfunction
 
+
+
+task dump_framebuffer;
+    begin
+
+        frame_file = $fopen("frames.txt", "a");
+
+        for (y = 0; y < 64; y = y + 1) begin
+
+            for (x = 0; x < 128; x = x + 1) begin
+
+                flat = y*128 + x;
+
+                $fwrite(
+                    frame_file,
+                    "%0d",
+                    framebuffer[flat]
+                );
+
+            end
+
+            $fwrite(frame_file, " ");
+
+        end
+
+        $fwrite(frame_file, "\n");
+
+        $fclose(frame_file);
+
+    end
+endtask
+
     always #5 clk = ~clk;
+
+always @(posedge clk) begin
+
+    if (memWrite && !prev_memWrite) begin
+        dump_framebuffer();
+    end
+
+    prev_memWrite <= memWrite;
+
+end
 
     task loadInstr;
         input [31:0] addr;

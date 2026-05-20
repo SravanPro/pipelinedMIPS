@@ -1,4 +1,4 @@
-Running: xsim.dir/painterTB_behav/xsimk.exe -simmode gui -wdb painterTB_behav.wdb -simrunnum 0 -socket 64014
+Running: xsim.dir/painterTB_behav/xsimk.exe -simmode gui -wdb painterTB_behav.wdb -simrunnum 0 -socket 59198
 Design successfully loaded
-Design Loading Memory Usage: 12300 KB (Peak: 12300 KB)
-Design Loading CPU Usage: 233 ms
+Design Loading Memory Usage: 11784 KB (Peak: 11784 KB)
+Design Loading CPU Usage: 108 ms
