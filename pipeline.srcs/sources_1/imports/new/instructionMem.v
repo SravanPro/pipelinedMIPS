@@ -43,7 +43,7 @@ module instructionMem #(parameter instructionMemSizeInBytes = 1024)
             mem[  4]=8'h35; mem[  5]=8'h4A; mem[  6]=8'hFF; mem[  7]=8'h00; // ori  r10, r10, 0xFF00  -> MMIO base
             mem[  8]=8'h20; mem[  9]=8'h01; mem[ 10]=8'h00; mem[ 11]=8'h40; // addi r1, r0, 64       X=64
             mem[ 12]=8'h20; mem[ 13]=8'h02; mem[ 14]=8'h00; mem[ 15]=8'h20; // addi r2, r0, 32       Y=32
-            mem[ 16]=8'h20; mem[ 17]=8'h13; mem[ 18]=8'h02; mem[ 19]=8'h00; // addi r19, r0, 0x200   FB_BASE
+            mem[ 16]=8'h20; mem[ 17]=8'h13; mem[ 18]=8'h00; mem[ 19]=8'h00; // addi r19, r0, 0x200   FB_BASE
 
             // --- LOOP (addr 20): latch all buttons ---
             mem[ 20]=8'h8D; mem[ 21]=8'h4C; mem[ 22]=8'h00; mem[ 23]=8'h00; // lw r12, 0(r10)  right

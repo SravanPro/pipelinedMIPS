@@ -15,7 +15,7 @@
     LSB of each packed word = pixel with lowest flat index
 */
 
-module memory #(parameter memorySizeInBytes = 6144, parameter ioWidth = 256)
+module memory #(parameter memorySizeInBytes = 1024, parameter ioWidth = 256)
 (
     input  wire        clock, reset,
     input  wire        memWrite, memRead,
@@ -66,18 +66,13 @@ module memory #(parameter memorySizeInBytes = 6144, parameter ioWidth = 256)
     end
 
     // ---- framebuffer output ----
-    // FB occupies bytes 0x200..0x5FF = 256 words
-    // Word w covers pixels [w*32 .. w*32+31]
-    // framebuffer[flat] = word_w bit (flat%32), word_w = mem[0x200+w*4..+3]
-    // Reconstruct each word big-endian (same as lw) then expose bits
-// ---- framebuffer output ----
     integer w;
     always @(*) begin
         for (w = 0; w < 256; w = w + 1) begin
-            framebuffer[w*32 +: 32] = {mem[32'h200 + w*4],
-                                       mem[32'h200 + w*4 + 1],
-                                       mem[32'h200 + w*4 + 2],
-                                       mem[32'h200 + w*4 + 3]};
+            framebuffer[w*32 +: 32] = {mem[w*4],
+                                       mem[w*4 + 1],
+                                       mem[w*4 + 2],
+                                       mem[w*4 + 3]};
         end
     end
 
