@@ -5,7 +5,11 @@ module parent #(parameter inputs = 256, parameter SIM_MODE = 0)(
     input reset,  
     input white, black, brown, red, gameRst, erase, draw,
     input speedInc, speedDec,
-    output wire [8191:0] framebufferNet,
+    output sck,
+    output sda,
+    output res,
+    output dc,
+    output cs,
     output [3:0] speedOut
 );
 
@@ -62,6 +66,17 @@ module parent #(parameter inputs = 256, parameter SIM_MODE = 0)(
         .crosshairFB(crosshairFB) 
     );
 
-    assign framebufferNet = framebuffer | crosshairFB;
+
+    wire [8191:0] framebufferNet = framebuffer | crosshairFB;
+    spi SPI (
+        .clock(clock),
+        .reset(reset),
+        .fb(framebufferNet),
+        .sck(sck),
+        .sda(sda),
+        .res(res),
+        .dc(dc),    
+        .cs(cs)
+    );
 
 endmodule
