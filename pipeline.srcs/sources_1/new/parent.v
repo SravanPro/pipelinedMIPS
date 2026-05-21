@@ -55,6 +55,8 @@ module parent #(parameter inputs = 256, parameter SIM_MODE = 0)(
 
     wire [8191:0] crosshairFB;
     crosshair CROSSHAIR (
+        .clock(clock),
+        .reset(reset),
         .X(r1),
         .Y(r2),
         .crosshairFB(crosshairFB) 
