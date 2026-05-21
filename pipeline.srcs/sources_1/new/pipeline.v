@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 module pipeline #(parameter inputs = 256)(
-    input  wire              clk,
+    input  wire              clock,
     input  wire              reset,
     input  wire [inputs-1:0] memMappedIO,
     output wire [8191:0]     framebuffer,
@@ -27,7 +27,7 @@ module pipeline #(parameter inputs = 256)(
     wire        mem_PCSrc;
 
     pc PC (
-        .clock    (clk),   .reset   (reset),
+        .clock    (clock),   .reset   (reset),
         .pcStall  (~hdu_PCWrite),
         .pcInVal  (pc_next),  .pcOutVal (pc_out)
     );
@@ -35,7 +35,7 @@ module pipeline #(parameter inputs = 256)(
     instructionMem IMEM (.pcVal(pc_out), .instruction(if_instruction), .reset(reset));
 
     if_id IF_ID (
-        .clk(clk), .reset(reset),
+        .clock(clock), .reset(reset),
         .if_id_stall(~hdu_IF_IDWrite),
         .if_id_flush(id_jump | id_jal | id_jr | mem_PCSrc),
         .if_id_NPC_in(pc_plus4),   .if_id_IR_in(if_instruction),
@@ -95,13 +95,13 @@ module pipeline #(parameter inputs = 256)(
     wire [31:0] wb_writeData, wb_writeData_final;
 
     regFile REGFILE (
-        .clock(clk), .reset(reset), .regWrite(wb_regWrite),
+        .clock(clock), .reset(reset), .regWrite(wb_regWrite),
         .rn1(id_RS), .rn2(id_RT), .wn(wb_regDest), .wd(wb_writeData_final),
         .rd1(id_rd1), .rd2(id_rd2), .r1(r1), .r2(r2)
     );
 
     id_ex ID_EX (
-        .clk(clk), .reset(reset),
+        .clock(clock), .reset(reset),
         .id_ex_flush(mem_PCSrc), .id_ex_stall(hdu_ID_EXStall),
         .id_ex_NPC_in(if_id_NPC),
         .id_ex_A_in(id_rd1),       .id_ex_B_in(id_rd2),
@@ -174,7 +174,7 @@ module pipeline #(parameter inputs = 256)(
     adder BRANCH_ADDER (.a(id_ex_NPC), .b(ex_shiftedImm), .sum(ex_branchTarget));
 
     ex_mem EX_MEM (
-        .clk(clk), .reset(reset), .ex_mem_flush(mem_PCSrc),
+        .clock(clock), .reset(reset), .ex_mem_flush(mem_PCSrc),
         .ex_mem_NPC_in(id_ex_NPC),
         .ex_mem_BranchTarget_in(ex_branchTarget), .ex_mem_Zero_in(ex_zero),
         .ex_mem_AluOut_in(ex_aluResult),           .ex_mem_B_in(forwardMuxB_out),
@@ -200,7 +200,7 @@ module pipeline #(parameter inputs = 256)(
 
     wire [31:0] mem_readData;
     memory DMEM (
-        .clock(clk), .reset(reset),
+        .clock(clock), .reset(reset),
         .memWrite(ex_mem_MemWrite), .memRead(ex_mem_MemRead),
         .address(ex_mem_AluOut),    .writeData(ex_mem_B),
         .readData(mem_readData),
@@ -209,7 +209,7 @@ module pipeline #(parameter inputs = 256)(
     );
 
     mem_wb MEM_WB (
-        .clk(clk), .reset(reset),
+        .clock(clock), .reset(reset),
         .mem_wb_NPC_in(ex_mem_NPC),
         .mem_wb_LMD_in(mem_readData),      .mem_wb_AluOut_in(ex_mem_AluOut),
         .mem_wb_RD_in(ex_mem_RD),

@@ -2,15 +2,15 @@
 
 module pipelineTB();
 
-    reg clk;
+    reg clock;
     reg reset;
 
     pipeline uut (
-        .clk   (clk),
+        .clock   (clock),
         .reset (reset)
     );
 
-    always #5 clk = ~clk;
+    always #5 clock = ~clock;
 
     task loadInstr;
         input [31:0] addr;
@@ -26,7 +26,7 @@ module pipelineTB();
     integer i;
 
     initial begin
-        clk   = 0;
+        clock   = 0;
         reset = 1;
         #17;
         reset = 0;

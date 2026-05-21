@@ -5,7 +5,7 @@
 
 
 module mem_wb (
-    input  wire        clk,
+    input  wire        clock,
     input  wire        reset,
 
     input  wire [31:0] mem_wb_NPC_in,
@@ -29,7 +29,7 @@ module mem_wb (
     output reg         mem_wb_Jal_out
 );
 
-    always @(posedge clk or posedge reset) begin
+    always @(posedge clock or posedge reset) begin
         if (reset) begin
             mem_wb_NPC_out        <= 32'b0;
             mem_wb_LMD_out      <= 32'b0;
@@ -50,3 +50,4 @@ module mem_wb (
         end
     end
 endmodule
+

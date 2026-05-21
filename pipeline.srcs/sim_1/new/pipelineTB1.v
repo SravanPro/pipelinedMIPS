@@ -20,11 +20,11 @@
 
 module pipelineTB1 ();
 
-    reg clk;
+    reg clock;
     reg reset;
 
     pipeline uut (
-        .clk   (clk),
+        .clock   (clock),
         .reset (reset)
     );
 
@@ -34,7 +34,7 @@ module pipelineTB1 ();
     wire [31:0] dbg_r2 = uut.REGFILE.regBank[2];
     wire [31:0] dbg_r3 = uut.REGFILE.regBank[3];
 
-    always #5 clk = ~clk;
+    always #5 clock = ~clock;
 
     task loadInstr;
         input [31:0] addr;
@@ -50,7 +50,7 @@ module pipelineTB1 ();
     integer i;
 
     initial begin
-        clk   = 0;
+        clock   = 0;
         reset = 1;
         #17;
         reset = 0;
@@ -77,3 +77,4 @@ module pipelineTB1 ();
     end
 
 endmodule
+

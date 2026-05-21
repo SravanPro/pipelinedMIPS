@@ -6,7 +6,7 @@
 
 
 module ex_mem (
-    input  wire        clk,
+    input  wire        clock,
     input  wire        reset,
     input  wire        ex_mem_flush,
 
@@ -49,7 +49,7 @@ module ex_mem (
     output reg         ex_mem_Jal_out
 );
 
-    always @(posedge clk or posedge reset) begin
+    always @(posedge clock or posedge reset) begin
         if (reset || ex_mem_flush) begin
 
             ex_mem_NPC_out        <= 32'b0;
@@ -87,3 +87,4 @@ module ex_mem (
         end
     end
 endmodule
+

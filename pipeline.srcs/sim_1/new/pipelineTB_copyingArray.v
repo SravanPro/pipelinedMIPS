@@ -2,11 +2,11 @@
 
 module pipelineTB_copyingArray();
 
-    reg clk;
+    reg clock;
     reg reset;
 
     pipeline uut (
-        .clk   (clk),
+        .clock   (clock),
         .reset (reset)
     );
 
@@ -29,7 +29,7 @@ module pipelineTB_copyingArray();
     wire [31:0] r21_src  = uut.REGFILE.regBank[21];
     wire [31:0] r22_dst  = uut.REGFILE.regBank[22];
 
-    always #5 clk = ~clk;
+    always #5 clock = ~clock;
 
     task loadInstr;
         input [31:0] addr;
@@ -45,7 +45,7 @@ module pipelineTB_copyingArray();
     integer i;
 
     initial begin
-        clk   = 0;
+        clock   = 0;
         reset = 1;
         #17;
         reset = 0;

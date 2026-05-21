@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 module parent #(parameter inputs = 256, parameter SIM_MODE = 0)(
-    input clk,  
+    input clock,  
     input reset,  
     input white, black, brown, red, gameRst, erase, draw,
     input speedInc, speedDec,
@@ -25,7 +25,7 @@ module parent #(parameter inputs = 256, parameter SIM_MODE = 0)(
     // stage 2: movement divider (WITH SIM_MODE)
     wire right, left, up, down;
     movementDivider #(.SIM_MODE(SIM_MODE)) MOVEMENT_DIVIDER (
-        .clock(clk),
+        .clock(clock),
         .reset(reset),
         .rightRaw(rightRaw),
         .leftRaw(leftRaw),
@@ -46,7 +46,7 @@ module parent #(parameter inputs = 256, parameter SIM_MODE = 0)(
     wire [8191:0] framebuffer;
 
     pipeline #(.inputs(inputs)) PIPELINE (
-        .clk         (clk),
+        .clock         (clock),
         .reset       (reset),
         .memMappedIO (memMappedIO),
         .framebuffer (framebuffer),

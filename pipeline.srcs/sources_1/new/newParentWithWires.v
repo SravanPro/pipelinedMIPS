@@ -17,7 +17,7 @@ module newParentWithWires (
     // --------------------------------------------------------
     // Primary clock / reset
     // --------------------------------------------------------
-    input  wire        clk,
+    input  wire        clock,
     input  wire        reset,
 
     // --------------------------------------------------------
@@ -575,7 +575,7 @@ module newParentWithWires (
     // Instantiate the pipeline
     // ============================================================
     pipeline PIPELINE_INST (
-        .clk   (clk),
+        .clock   (clock),
         .reset (reset)
     );
 

@@ -1,11 +1,11 @@
 `timescale 1ns / 1ps
 module pipelineTB2 ();
-    reg clk;
+    reg clock;
     reg reset;
     reg [1:0] mmio_in;
 
     pipeline #(.inputs(2)) uut (
-        .clk         (clk),
+        .clock         (clock),
         .reset       (reset),
         .memMappedIO (mmio_in)
     );
@@ -15,7 +15,7 @@ module pipelineTB2 ();
     wire [31:0] dbg_r7 = uut.REGFILE.regBank[7];
     wire [31:0] dbg_r9 = uut.REGFILE.regBank[9];
 
-    always #5 clk = ~clk;
+    always #5 clock = ~clock;
 
     task loadInstr;
         input [31:0] addr;
@@ -31,7 +31,7 @@ module pipelineTB2 ();
     integer i;
 
     initial begin
-        clk     = 0;
+        clock     = 0;
         reset   = 1;
         mmio_in = 2'b01;
 
@@ -72,6 +72,7 @@ module pipelineTB2 ();
         $finish;
     end
 endmodule
+
 
 
 

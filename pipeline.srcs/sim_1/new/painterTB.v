@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 module painterTB ();
-    reg clk, reset;
+    reg clock, reset;
     reg draw, erase, gameRst, speedInc, speedDec;
     reg white, black, brown, red;
 
@@ -12,14 +12,14 @@ module painterTB ();
     wire memWrite = uut.PIPELINE.DMEM.memWrite;
 
     parent #(.inputs(256), .SIM_MODE(1)) uut (
-        .clk(clk), .reset(reset),
+        .clock(clock), .reset(reset),
         .white(white), .black(black), .brown(brown), .red(red),
         .gameRst(gameRst), .erase(erase), .draw(draw),
         .speedInc(speedInc), .speedDec(speedDec),
         .framebufferNet(framebufferNet), .speedOut(speedOut)
     );
 
-    always #5 clk = ~clk;
+    always #5 clock = ~clock;
 
     // File Logging Logic
     integer frame_file, x, y, flat;
@@ -45,7 +45,7 @@ module painterTB ();
         end
     endtask
 
-    always @(posedge clk) begin
+    always @(posedge clock) begin
         if (memWrite && !prev_memWrite) dump();
         prev_memWrite <= memWrite;
     end
@@ -61,23 +61,23 @@ module painterTB ();
     endtask
 
     initial begin
-        {clk, reset, draw, erase, gameRst, speedInc, speedDec} = 0;
+        {clock, reset, draw, erase, gameRst, speedInc, speedDec} = 0;
         set_joystick(0,0,0,0);
         
         #100 reset = 1; #100 reset = 0;
-        repeat(1000) @(posedge clk); // Boot up
+        repeat(1000) @(posedge clock); // Boot up
 
         $display("Simulating 32-pixel move (Fast Mode)...");
         draw = 1;
         set_joystick(1, 0, 0, 0); // Move RIGHT
         
         // At SIM_MODE=1, Divider is 1666. 32 pixels * 1666 = 53,312 cycles.
-        repeat(55000) @(posedge clk);
+        repeat(55000) @(posedge clock);
         
         set_joystick(0,0,0,0);
         draw = 0;
         
-        repeat(500) @(posedge clk);
+        repeat(500) @(posedge clock);
         $display("Simulation finished. Check frames.txt");
         $finish;
     end

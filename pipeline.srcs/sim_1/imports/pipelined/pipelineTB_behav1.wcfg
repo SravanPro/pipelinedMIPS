@@ -20,9 +20,9 @@
       <ValueColumnWidth column_width="72"></ValueColumnWidth>
    </column_width_setting>
    <WVObjectSize size="17" />
-   <wvobject fp_name="/pipelineTB/clk" type="logic">
-      <obj_property name="ElementShortName">clk</obj_property>
-      <obj_property name="ObjectShortName">clk</obj_property>
+   <wvobject fp_name="/pipelineTB/clock" type="logic">
+      <obj_property name="ElementShortName">clock</obj_property>
+      <obj_property name="ObjectShortName">clock</obj_property>
    </wvobject>
    <wvobject fp_name="/pipelineTB/reset" type="logic">
       <obj_property name="ElementShortName">reset</obj_property>
@@ -115,3 +115,4 @@
       <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
 </wave_config>
+
