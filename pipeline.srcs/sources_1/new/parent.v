@@ -5,13 +5,24 @@ module parent #(parameter inputs = 256, parameter SIM_MODE = 0)(
     input reset,  
     input white, black, brown, red, gameRst, erase, draw,
     input speedInc, speedDec,
+    input sw,
     output sck,
     output sda,
     output res,
     output dc,
     output cs,
-    output [3:0] speedOut
+    output [3:0] speedOut,
+    output [6:0] seg0,
+    output [6:0] seg1,
+    output half_digit
 );
+
+    tff TFF (
+        .clock(clock),
+        .reset(reset),
+        .t(1'b1),
+        .q(t_ff_clk)
+    );
 
     // stage 1: analog translator (RESTORED)
     wire rightRaw, leftRaw, upRaw, downRaw;
@@ -29,7 +40,7 @@ module parent #(parameter inputs = 256, parameter SIM_MODE = 0)(
     // stage 2: movement divider (WITH SIM_MODE)
     wire right, left, up, down;
     movementDivider #(.SIM_MODE(SIM_MODE)) MOVEMENT_DIVIDER (
-        .clock(clock),
+        .clock(t_ff_clk),
         .reset(reset),
         .rightRaw(rightRaw),
         .leftRaw(leftRaw),
@@ -50,16 +61,25 @@ module parent #(parameter inputs = 256, parameter SIM_MODE = 0)(
     wire [8191:0] framebuffer;
 
     pipeline #(.inputs(inputs)) PIPELINE (
-        .clock         (clock),
+        .clock         (t_ff_clk),
         .reset       (reset),
         .memMappedIO (memMappedIO),
         .framebuffer (framebuffer),
         .r1(r1), .r2(r2)
     );
 
+    segmentDisplayDecoder SEGMENT_DISPLAY_DECODER (
+        .sw(sw),
+        .X(r1[6:0]),
+        .Y(r2[5:0]),
+        .seg0(seg0),
+        .seg1(seg1),
+        .half_digit(half_digit)
+    );
+
     wire [8191:0] crosshairFB;
     crosshair CROSSHAIR (
-        .clock(clock),
+        .clock(t_ff_clk),
         .reset(reset),
         .X(r1),
         .Y(r2),
@@ -68,15 +88,15 @@ module parent #(parameter inputs = 256, parameter SIM_MODE = 0)(
 
 
     wire [8191:0] framebufferNet = framebuffer | crosshairFB;
-    spi SPI (
-        .clock(clock),
-        .reset(reset),
-        .fb(framebufferNet),
-        .sck(sck),
-        .sda(sda),
-        .res(res),
-        .dc(dc),    
-        .cs(cs)
-    );
+    // spi SPI (
+    //     .clock(t_ff_clk),
+    //     .reset(reset),
+    //     .fb(framebufferNet),
+    //     .sck(sck),
+    //     .sda(sda),
+    //     .res(res),
+    //     .dc(dc),    
+    //     .cs(cs)
+    // );
 
 endmodule
