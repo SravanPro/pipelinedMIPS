@@ -79,7 +79,7 @@ module parent #(parameter inputs = 256, parameter SIM_MODE = 0)(
 
     wire [8191:0] crosshairFB;
     crosshair CROSSHAIR (
-        .clock(t_ff_clk),
+        .clock(clock),
         .reset(reset),
         .X(r1),
         .Y(r2),
@@ -88,15 +88,15 @@ module parent #(parameter inputs = 256, parameter SIM_MODE = 0)(
 
 
     wire [8191:0] framebufferNet = framebuffer | crosshairFB;
-    // spi SPI (
-    //     .clock(t_ff_clk),
-    //     .reset(reset),
-    //     .fb(framebufferNet),
-    //     .sck(sck),
-    //     .sda(sda),
-    //     .res(res),
-    //     .dc(dc),    
-    //     .cs(cs)
-    // );
+    spi SPI (
+        .clock(t_ff_clk),
+        .reset(reset),
+        .fb(framebufferNet),
+        .sck(sck),
+        .sda(sda),
+        .res(res),
+        .dc(dc),    
+        .cs(cs)
+    );
 
 endmodule

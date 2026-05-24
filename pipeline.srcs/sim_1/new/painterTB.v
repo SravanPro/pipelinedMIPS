@@ -11,7 +11,7 @@ module painterTB ();
     // Change "DMEM" to whatever your data memory instance name is inside PIPELINE
     wire memWrite = uut.PIPELINE.DMEM.memWrite;
 
-    parent1_d #(.inputs(256), .SIM_MODE(1)) uut (
+    parent #(.inputs(256), .SIM_MODE(1)) uut (
         .clock(clock), .reset(reset),
         .white(white), .black(black), .brown(brown), .red(red),
         .gameRst(gameRst), .erase(erase), .draw(draw),
@@ -68,7 +68,7 @@ module painterTB ();
         {clock, reset, draw, erase, gameRst, speedInc, speedDec} = 0;
         set_joystick(0,0,0,0);
         
-        #100 reset = 1; #100 reset = 0;
+        #1000 reset = 1; #100 reset = 0;
      //   $display("DEBUG_INIT: After reset sequence, reset=%b clock=%b t_ff_clk=%b crosshair.reset=%b crosshair.step=%0d crosshair.active=%b crosshair.Xr=%0d crosshair.Yr=%0d", reset, clock, uut.t_ff_clk, uut.CROSSHAIR.reset, uut.CROSSHAIR.step, uut.CROSSHAIR.active, uut.CROSSHAIR.Xr, uut.CROSSHAIR.Yr);
         repeat(1000) @(posedge clock); // Boot up
       //  $display("DEBUG_BOOT: After 1000 clocks, reset=%b clock=%b t_ff_clk=%b crosshair.step=%0d crosshair.active=%b crosshair_or=%b", reset, clock, uut.t_ff_clk, uut.CROSSHAIR.step, uut.CROSSHAIR.active, |uut.crosshairFB);
