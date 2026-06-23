@@ -80,13 +80,11 @@ The joystick is a **2-axis potentiometer**. Rather than a standard multi-compara
 
 The `analogTranslator` module decodes these thermometer codes into clean directional signals:
 
-| white, black | Meaning |   | brown, red | Meaning |
+| white, black | left, right |   | brown, red | up, down |
 |:---:|:---:|---|:---:|:---:|
-| 01 | left  |   | 01 | up   |
-| 11 | — (center) |   | 00 | up   |
-| 00 | right |   | 10 | down |
-| 10 | — (center) |   | 11 | down |
-|    |       |   | 00 | — (center) |
+| 01 | 00  |   | 01 | 00  |
+| 11 | 10 |   | 00 | 10  |
+| 00 | 01 |   | 10 | 01 |
 
 ```verilog
 assign left  = white;
