@@ -25,7 +25,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='C:/Vivado/CompArch/lab9_10_pipelined/pipelined/pipelined.runs/synth_1'
+HD_PWD='C:/Vivado/CompArch/pipelinedGit/pipeline/pipeline.runs/synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log
@@ -41,4 +41,4 @@ EAStep()
      fi
 }
 
-EAStep vivado -log newParentWithWires.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source newParentWithWires.tcl
+EAStep vivado -log parent.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source parent.tcl

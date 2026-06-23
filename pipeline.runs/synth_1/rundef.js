@@ -24,7 +24,7 @@ eval( EAInclude(ISEJScriptLib) );
 
 
 ISEStep( "vivado",
-         "-log newParentWithWires.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source newParentWithWires.tcl" );
+         "-log parent.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source parent.tcl" );
 
 
 

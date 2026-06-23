@@ -11,19 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="565,086.666 ns"></ZoomStartTime>
-      <ZoomEndTime time="565,216.667 ns"></ZoomEndTime>
-      <Cursor1Time time="565,195.000 ns"></Cursor1Time>
+      <ZoomStartTime time="0.000000 us"></ZoomStartTime>
+      <ZoomEndTime time="262.000001 us"></ZoomEndTime>
+      <Cursor1Time time="301.205000 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="164"></NameColumnWidth>
+      <NameColumnWidth column_width="154"></NameColumnWidth>
       <ValueColumnWidth column_width="72"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="19" />
-   <wvobject fp_name="/painterTB/clk" type="logic">
-      <obj_property name="ElementShortName">clk</obj_property>
-      <obj_property name="ObjectShortName">clk</obj_property>
-   </wvobject>
+   <WVObjectSize size="21" />
    <wvobject fp_name="/painterTB/reset" type="logic">
       <obj_property name="ElementShortName">reset</obj_property>
       <obj_property name="ObjectShortName">reset</obj_property>
@@ -64,10 +60,6 @@
       <obj_property name="ElementShortName">red</obj_property>
       <obj_property name="ObjectShortName">red</obj_property>
    </wvobject>
-   <wvobject fp_name="/painterTB/framebufferNet" type="array">
-      <obj_property name="ElementShortName">framebufferNet[8191:0]</obj_property>
-      <obj_property name="ObjectShortName">framebufferNet[8191:0]</obj_property>
-   </wvobject>
    <wvobject fp_name="/painterTB/speedOut" type="array">
       <obj_property name="ElementShortName">speedOut[3:0]</obj_property>
       <obj_property name="ObjectShortName">speedOut[3:0]</obj_property>
@@ -95,5 +87,23 @@
    <wvobject fp_name="/painterTB/prev_memWrite" type="logic">
       <obj_property name="ElementShortName">prev_memWrite</obj_property>
       <obj_property name="ObjectShortName">prev_memWrite</obj_property>
+   </wvobject>
+   <wvobject fp_name="/painterTB/uut/r1" type="array">
+      <obj_property name="ElementShortName">r1[31:0]</obj_property>
+      <obj_property name="ObjectShortName">r1[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/painterTB/uut/r2" type="array">
+      <obj_property name="ElementShortName">r2[31:0]</obj_property>
+      <obj_property name="ObjectShortName">r2[31:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/painterTB/framebufferNet" type="array">
+      <obj_property name="ElementShortName">framebufferNet[8191:0]</obj_property>
+      <obj_property name="ObjectShortName">framebufferNet[8191:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/painterTB/uut/framebuffer" type="array">
+      <obj_property name="ElementShortName">framebuffer[8191:0]</obj_property>
+      <obj_property name="ObjectShortName">framebuffer[8191:0]</obj_property>
    </wvobject>
 </wave_config>

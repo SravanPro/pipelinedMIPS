@@ -1,1 +1,4 @@
 Time resolution is 1 ps
+Simulating 32-pixel move (Fast Mode)...
+Simulation finished. Check frames.txt
+$finish called at time : 566095 ns : File "C:/Vivado/CompArch/pipelinedGit/pipeline/pipeline.srcs/sim_1/new/painterTB.v" Line 88
