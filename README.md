@@ -422,3 +422,5 @@ mapped to MMIO addresses 0–6, read by the painter program via `lw r1x, N(r10)`
 | `spi.v` | SSD1306 SPI driver with FSM |
 | `segmentDisplayDecoder.v` | X/Y coordinate 7-segment display |
 | `tff.v` | T flip-flop (÷2 clock divider) |
+
+<img width="1152" height="443" alt="Image" src="https://github.com/user-attachments/assets/f2131fa6-26f1-45fd-94e3-8d3ef5a8518d" />
