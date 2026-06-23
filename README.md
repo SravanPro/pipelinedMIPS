@@ -84,7 +84,7 @@ The `analogTranslator` module decodes these thermometer codes into clean directi
 |:---:|:---:|---|:---:|:---:|
 | 01 | 00  |   | 01 | 00  |
 | 11 | 10 |   | 00 | 10  |
-| 00 | 01 |   | 10 | 01 |
+| 00 | 01 |   | 11 | 01 |
 
 ```verilog
 assign left  = white;
