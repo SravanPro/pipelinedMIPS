@@ -25,9 +25,11 @@ module movementDivider #(
         end else begin
             prev_inc <= db_inc_state;
             prev_dec <= db_dec_state;
+
             if (speedInc == db_inc_state) db_inc_cnt <= 0;
             else if (db_inc_cnt >= DEBOUNCE_VAL) begin db_inc_state <= speedInc; db_inc_cnt <= 0; end
             else db_inc_cnt <= db_inc_cnt + 1;
+
             if (speedDec == db_dec_state) db_dec_cnt <= 0;
             else if (db_dec_cnt >= DEBOUNCE_VAL) begin db_dec_state <= speedDec; db_dec_cnt <= 0; end
             else db_dec_cnt <= db_dec_cnt + 1;
@@ -63,14 +65,20 @@ module movementDivider #(
         if (reset) begin
             speed <= 4'd15; counter <= 0;  // default to fastest
             {right, left, up, down} <= 4'b0;
-        end else begin
+        end 
+        
+        else begin
+
             if (db_inc_state && !prev_inc && speed < 15) speed <= speed + 1;
             if (db_dec_state && !prev_dec && speed > 1)  speed <= speed - 1;
+
             if (counter >= divider - 1) counter <= 0;
             else counter <= counter + 1;
+
             if (counter < PULSE_WIDTH) begin
                 {right, left, up, down} <= {rightRaw, leftRaw, upRaw, downRaw};
-            end else begin
+            end 
+            else begin
                 {right, left, up, down} <= 4'b0;
             end
         end

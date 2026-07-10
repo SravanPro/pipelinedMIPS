@@ -11,33 +11,129 @@ module instructionMem #(parameter instructionMemSizeInBytes = 1024)
 
     assign instruction = {mem[pcVal], mem[pcVal+1], mem[pcVal+2], mem[pcVal+3]};
 
-    // -----------------------------------------------------------------------
-    // Load the painter program whenever reset is asserted.
-    // All other state (DMEM, registers, PC) is cleared by the pipeline reset;
-    // IMEM is intentionally left with this fixed program so it survives reset.
-    // -----------------------------------------------------------------------
+
     task load_program;
         integer i;
         begin
             for (i = 0; i < instructionMemSizeInBytes; i = i + 1)
                 mem[i] = 8'h00;
+/*
+PAINTER PROGRAM
 
-            // ==============================================================
-            // PAINTER PROGRAM
-            //
-            // Register map:
-            //   r1=X  r2=Y  r3=flat  r4=word_idx  r5=bit_idx
-            //   r6=FB_word_addr  r7=word  r8=mask  r9=result
-            //   r10=MMIO_BASE  r11=scratch
-            //   r12=right r13=left r14=up r15=down r16=draw r17=erase r18=game_reset
-            //   r19=FB_BASE(0x200)  r20=shift-amount scratch
-            //
-            // Framebuffer layout in DMEM 0x200..0x5FF (bit-packed):
-            //   pixel(X,Y): flat = Y*128 + X
-            //   word addr  = 0x200 + (flat>>5)*4
-            //   bit index  = flat & 31  (bit0 = LSB)
-            // ==============================================================
+Register map:
+    r1=X  r2=Y  
 
+    r3=flat  
+
+    r4=word_idx  r5=bit_idx
+    
+    r6=FB_word_addr  
+    r7=word  
+    r8=mask  
+    r9=result
+    r10=MMIO_BASE  
+    r11=scratch
+
+    r12=right r13=left r14=up r15=down r16=draw r17=erase r18=game_reset
+
+    r19=FB_BASE(0x200)  
+    r20=shift-amount scratch
+
+Framebuffer layout in DMEM 0x200..0x5FF (bit-packed):
+    pixel(X,Y): flat = Y*128 + X
+    word addr  = 0x200 + (flat>>5)*4
+    bit index  = flat & 31  (bit0 = LSB)
+
+INIT:
+    lui   r10, 0xFFFF              ; MMIO upper half
+    ori   r10, r10, 0xFF00        ; r10 = MMIO base
+    addi  r1,  r0, 64             ; X = 64
+    addi  r2,  r0, 32             ; Y = 32
+    addi  r19, r0, 0x200          ; FB_BASE = 0x200
+
+LOOP:                             ; latch all buttons
+    lw    r12, 0(r10)            ; right
+    lw    r13, 1(r10)            ; left
+    lw    r14, 2(r10)            ; up
+    lw    r15, 3(r10)            ; down
+    lw    r16, 4(r10)            ; draw
+    lw    r17, 5(r10)            ; erase
+    lw    r18, 6(r10)            ; game_reset
+
+    beq   r18, r0, skip_greset   ; if not resetting, skip
+    j     INIT                   ; restart
+
+skip_greset:
+
+    ; RIGHT
+    beq   r12, r0, skip_right
+    slti  r11, r1, 127
+    beq   r11, r0, skip_right
+    addi  r1, r1, 1
+
+skip_right:
+
+    ; LEFT
+    beq   r13, r0, skip_left
+    beq   r1,  r0, skip_left
+    addi  r1, r1, -1
+
+skip_left:
+
+    ; UP
+    beq   r14, r0, skip_up
+    slti  r11, r2, 63
+    beq   r11, r0, skip_up
+    addi  r2, r2, 1
+
+skip_up:
+
+    ; DOWN
+    beq   r15, r0, skip_down
+    beq   r2,  r0, skip_down
+    addi  r2, r2, -1
+
+skip_down:
+
+    ; Compute framebuffer address:
+    ; flat = Y*128 + X
+    ; word addr = 0x200 + (flat>>5)*4
+    ; bit index = flat & 31
+
+    addi  r20, r0, 7
+    sllv  r3, r2, r20            ; r3 = Y<<7
+    add   r3, r3, r1             ; r3 = flat
+
+    addi  r20, r0, 5
+    srlv  r4, r3, r20            ; r4 = word_idx
+    andi  r5, r3, 31             ; r5 = bit_idx
+
+    addi  r20, r0, 2
+    sllv  r6, r4, r20            ; r6 = word_idx*4
+    add   r6, r6, r19            ; r6 = framebuffer word address
+
+    lw    r7, 0(r6)              ; current word
+
+    addi  r8, r0, 1
+    sllv  r8, r8, r5             ; r8 = 1<<bit_idx
+
+    ; DRAW
+    beq   r16, r0, skip_draw
+    or    r9, r7, r8
+    sw    r9, 0(r6)
+
+skip_draw:
+
+    ; ERASE
+    beq   r17, r0, skip_erase
+    nor   r8, r8, r0             ; r8 = ~r8
+    and   r9, r7, r8
+    sw    r9, 0(r6)
+
+skip_erase:
+    j     LOOP                
+*/
+            
             // --- INIT (addr 0) ---
             mem[  0]=8'h3C; mem[  1]=8'h0A; mem[  2]=8'hFF; mem[  3]=8'hFF; // lui  r10, 0xFFFF
             mem[  4]=8'h35; mem[  5]=8'h4A; mem[  6]=8'hFF; mem[  7]=8'h00; // ori  r10, r10, 0xFF00  -> MMIO base

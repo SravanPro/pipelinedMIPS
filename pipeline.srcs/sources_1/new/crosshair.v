@@ -3,7 +3,7 @@
 // Sequential crosshair framebuffer
 // Latency: 18 cycles max (1 clear + 17 pixel writes) = 360 ns @ 50 MHz
 // No combinational multipliers or dividers.
-// py*128 == {py, 7'b0} — pure wiring, zero LUTs.
+// py*128 == {py, 7'b0}
 
 module crosshair (
     input             clock,
@@ -16,13 +16,11 @@ module crosshair (
     localparam STEPS = 5'd17;
 
     reg [4:0] step;
-    reg       active;
+    reg active;
     reg [6:0] Xr;
     reg [5:0] Yr;
 
-    // ------------------------------------------------------------------
-    // Offset decode — combinational, pure mux, no mult/div
-    // ------------------------------------------------------------------
+    // Offset decode
     reg signed [3:0] ox, oy;
 
     always @(*) begin
@@ -48,19 +46,17 @@ module crosshair (
         endcase
     end
 
-    // ------------------------------------------------------------------
-    // Pixel address — combinational wires, computed from current step's
+    // Pixel address — combinational wires, computed from current step's 
     // offset. No blocking assignments in clocked logic.
-    // ------------------------------------------------------------------
+
     wire signed [8:0] px_s = $signed({2'b00, Xr}) + $signed(ox);
     wire signed [7:0] py_s = $signed({2'b00, Yr}) + $signed(oy);
-    wire              in_bounds = (px_s >= 0) && (px_s <= 127) &&
-                                  (py_s >= 0) && (py_s <= 63);
-    wire [13:0]       flat = {py_s[5:0], 7'b0} | {7'b0, px_s[6:0]};
 
-    // ------------------------------------------------------------------
-    // Single FSM block — one driver for every register
-    // ------------------------------------------------------------------
+    wire in_bounds = (px_s >= 0) && (px_s <= 127) &&
+                     (py_s >= 0) && (py_s <= 63);
+
+    wire [13:0] flat = {py_s[5:0], 7'b0} | {7'b0, px_s[6:0]};
+
     always @(posedge clock) begin
         if (reset) begin
             Xr          <= 7'd0;
@@ -68,7 +64,9 @@ module crosshair (
             step        <= 5'd0;
             active      <= 1'b1;
             crosshairFB <= 8192'b0;
-        end else begin
+        end 
+        
+        else begin
 
             // Input-change detection: restart whenever X or Y changes
             if (X[6:0] != Xr || Y[5:0] != Yr) begin
@@ -83,7 +81,8 @@ module crosshair (
                 if (step == 5'd0) begin
                     crosshairFB <= 8192'b0;   // clear
                     step        <= step + 5'd1;
-                end else if (step <= STEPS) begin
+                end 
+                else if (step <= STEPS) begin
                     if (in_bounds)
                         crosshairFB[flat] <= 1'b1;
                     if (step == STEPS) begin

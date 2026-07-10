@@ -44,9 +44,7 @@ function [7:0] page_byte;
     end
 endfunction
 
-// ---------------------------------------------------------------------------
-// SPI shift engine  - drives sck, sda ONLY
-// ---------------------------------------------------------------------------
+// SPI shift engine: drives sck, sda ONLY
 reg [7:0]  shift_reg;
 reg [2:0]  bit_cnt;
 reg [2:0]  clk_cnt;
@@ -68,7 +66,8 @@ always @(posedge clock) begin
         sck       <= 1'b0;
         sda       <= 1'b0;
         spi_busy  <= 1'b0;
-    end else begin
+    end 
+    else begin
         if (spi_load && !spi_busy) begin
             shift_reg <= data_byte;
             sda       <= data_byte[7];
@@ -78,7 +77,8 @@ always @(posedge clock) begin
             sck_r     <= 1'b0;
             sck       <= 1'b0;
             spi_busy  <= 1'b1;
-        end else if (spi_busy) begin
+        end 
+        else if (spi_busy) begin
             if (clk_cnt == CLK_DIV - 1) begin
                 clk_cnt <= 3'd0;
                 sck_r   <= ~sck_r;
@@ -86,13 +86,16 @@ always @(posedge clock) begin
 
                 if (!sck_r) begin
                     // Rising edge - data already stable
-                end else begin
+                end 
+                else begin
                     // Falling edge - shift next bit or finish
                     if (bit_cnt == 3'd0) begin
                         spi_busy <= 1'b0;
                         spi_done <= 1'b1;
                         sck      <= 1'b0;
-                    end else begin
+                    end 
+                    
+                    else begin
                         shift_reg <= {shift_reg[6:0], 1'b0};
                         sda       <= shift_reg[6];
                         bit_cnt   <= bit_cnt - 3'd1;
@@ -105,9 +108,7 @@ always @(posedge clock) begin
     end
 end
 
-// ---------------------------------------------------------------------------
 // Control FSM  - sole driver of cs, dc, res
-// ---------------------------------------------------------------------------
 localparam [2:0]
     S_RESET      = 3'd0,
     S_RESET_WAIT = 3'd1,
@@ -138,6 +139,7 @@ task fsm_send;
     end
 endtask
 
+
 always @(posedge clock) begin
     spi_load <= 1'b0;
 
@@ -150,7 +152,8 @@ always @(posedge clock) begin
         init_idx <= 5'd0;
         page     <= 3'd0;
         col      <= 7'd0;
-    end else begin
+    end 
+    else begin
         case (state)
 
             S_RESET: begin
